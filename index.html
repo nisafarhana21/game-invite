@@ -2,311 +2,341 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Engagement Quest: The Love Adventure</title>
-  <!-- Google Pixel Font: Press Start 2P & VT323 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Engagement Quest: Zulfan & Nindy</title>
+  <!-- Google Pixel Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Canvas Confetti untuk Fanfare Finis -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+    }
+
     * {
       touch-action: manipulation;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
     }
 
-    body {
-      background-color: #121820;
-      color: #f7fafc;
-      font-family: 'Press Start 2P', monospace;
-      overflow: hidden;
+    html, body {
+      width: 100%;
+      height: 100%;
       margin: 0;
       padding: 0;
+      overflow: hidden;
+      background-color: #0b0e14;
+      font-family: 'Press Start 2P', monospace;
       image-rendering: pixelated;
     }
 
-    /* Retro Game Boy Border Box */
-    .retro-box {
-      border: 4px solid #f6f7f8;
+    /* Game Boy Handheld Housing Style */
+    .gameboy-frame {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 480px;
+      height: 100dvh;
+      margin: 0 auto;
+      background: #1e2430;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.7);
+      padding-top: var(--sat);
+      padding-bottom: max(var(--sab), 10px);
+      position: relative;
+    }
+
+    /* Screen Bezel */
+    .screen-bezel {
+      background: #11161f;
+      border: 4px solid #2d3748;
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8), 0 2px 4px rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
+
+    /* Retro Dialog Box (Pokemon Gen 1-3 Inspired) */
+    .pokemon-dialog-box {
+      border: 4px solid #1a202c;
       box-shadow: 
-        inset 4px 4px 0px #ffffff,
-        inset -4px -4px 0px #8a99a8,
-        0 6px 0px rgba(0, 0, 0, 0.45);
-      background-color: #242b35;
-    }
-
-    .retro-dialog-box {
-      border: 4px solid #ffffff;
-      outline: 4px solid #202020;
-      box-shadow: inset 3px 3px 0px #d0d7de, inset -3px -3px 0px #57606a;
+        inset 3px 3px 0 #ffffff,
+        inset -3px -3px 0 #a0aec0,
+        0 6px 16px rgba(0,0,0,0.5);
       background: #ffffff;
-      color: #1f2328;
+      color: #1a202c;
+      border-radius: 6px;
     }
 
-    /* Retro Pixelated Buttons */
-    .btn-pixel-green {
-      background-color: #2ea44f;
-      border: 3px solid #ffffff;
-      box-shadow: 0 4px 0 #1b632f, 0 6px 0 #000;
-      transition: all 0.08s ease;
-    }
-    .btn-pixel-green:active {
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #1b632f, 0 2px 0 #000;
-    }
-
-    .btn-pixel-red {
-      background-color: #e63946;
-      border: 3px solid #ffffff;
-      box-shadow: 0 4px 0 #9d1b24, 0 6px 0 #000;
-    }
-    .btn-pixel-red:active {
-      transform: translateY(4px);
-      box-shadow: 0 0 0 #9d1b24, 0 2px 0 #000;
-    }
-
-    /* D-PAD Buttons */
-    .d-btn {
-      background: #2b303a;
-      border: 2px solid #57606a;
-      box-shadow: inset 2px 2px 0 #6e7681, inset -2px -2px 0 #161b22;
+    /* Retro D-Pad */
+    .dpad-btn {
+      background: #2b3240;
+      border: 2px solid #4a5568;
+      box-shadow: inset 2px 2px 0 #718096, inset -2px -2px 0 #1a202c;
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #cbd5e1;
+      font-size: 13px;
+      touch-action: none;
+    }
+    .dpad-btn:active, .dpad-btn.pressed {
+      background: #1a202c;
+      box-shadow: inset 2px 2px 0 #11161f;
+      color: #f6e05e;
+    }
+
+    /* Action Buttons (A & B) */
+    .round-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 9999px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
       font-size: 14px;
-      color: #c9d1d9;
+      color: #ffffff;
+      border: 3px solid #ffffff;
+      touch-action: none;
+      transition: transform 0.05s ease;
     }
-    .d-btn:active {
-      background: #1f242c;
-      transform: scale(0.94);
+    .btn-b {
+      background: #dc2626;
+      box-shadow: 0 4px 0 #991b1b, 0 6px 0 rgba(0,0,0,0.4);
+    }
+    .btn-a {
+      background: #16a34a;
+      box-shadow: 0 4px 0 #15803d, 0 6px 0 rgba(0,0,0,0.4);
+    }
+    .round-btn:active, .round-btn.pressed {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 transparent, 0 2px 0 rgba(0,0,0,0.3);
     }
 
-    /* Floating retro blinking animation */
-    @keyframes blinkText {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-    .retro-blink {
-      animation: blinkText 0.9s infinite;
-    }
-
-    /* Scanlines effect overlay */
+    /* Scanline Overlay */
     .scanlines {
-      background: linear-gradient(
-        rgba(18, 16, 16, 0) 50%, 
-        rgba(0, 0, 0, 0.25) 50%
-      ), linear-gradient(
-        90deg,
-        rgba(255, 0, 0, 0.04),
-        rgba(0, 255, 0, 0.02),
-        rgba(0, 0, 255, 0.04)
-      );
-      background-size: 100% 4px, 6px 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%),
+                  linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 3px, 4px 100%;
       pointer-events: none;
+    }
+
+    /* Smooth pulse hint */
+    @keyframes promptPulse {
+      0%, 100% { transform: translate(-50%, -100%) scale(1); }
+      50% { transform: translate(-50%, -115%) scale(1.08); }
+    }
+    .action-indicator {
+      animation: promptPulse 0.8s ease-in-out infinite;
     }
   </style>
 </head>
-<body class="w-screen h-screen flex flex-col items-center justify-center select-none bg-neutral-950">
+<body>
 
   <!-- ============================================================== -->
-  <!-- 1. SCREEN: TITLE SCREEN RETRO / INTRO START (AYO MAINKAN) -->
+  <!-- 1. ROOT HANDHELD CONSOLE WRAPPER -->
   <!-- ============================================================== -->
-  <div id="startScreen" class="absolute inset-0 z-50 flex flex-col items-center justify-between p-6 bg-gradient-to-b from-[#1a2f3b] via-[#223a47] to-[#121c24] text-center">
-    
-    <!-- Header Title Pokemon Style -->
-    <div class="mt-4 flex flex-col items-center">
-      <div class="inline-block px-3 py-1 bg-amber-400 text-neutral-900 text-[10px] font-bold border-2 border-white rounded shadow mb-3 tracking-widest">
-        ★ SPECIAL ENGAGEMENT EDITION ★
-      </div>
-      <h1 class="text-xl md:text-3xl text-amber-300 font-extrabold tracking-wider leading-relaxed drop-shadow-[0_4px_0_#92400e]">
-        ENGAGEMENT QUEST
-      </h1>
-      <p class="text-xs md:text-sm text-cyan-200 mt-2 font-mono tracking-widest">
-        JOURNEY OF LOVE & DESTINY
-      </p>
-    </div>
+  <div class="gameboy-frame">
 
-    <!-- Center Card: Retro Tamu & Pixel Heart -->
-    <div class="retro-box w-full max-w-sm p-5 flex flex-col items-center space-y-4">
-      <!-- Pixel Heart Gif/SVG -->
-      <div class="w-16 h-16 relative flex items-center justify-center animate-bounce">
-        <svg viewBox="0 0 16 16" class="w-full h-full fill-red-500 drop-shadow-[0_3px_0_#7f1d1d]">
-          <path d="M2 5h2v-2h2v-1h4v1h2v2h2v4h-1v2h-2v2h-2v1h-2v1h-2v-1h-2v-1h-2v-2h-1v-4h1v-2z"/>
-        </svg>
-      </div>
-
-      <div class="text-[10px] text-gray-300 uppercase tracking-widest leading-loose">
-        KEPADA YTH. TAMU TERHORMAT:
-      </div>
-      <div id="guestTitleName" class="text-sm md:text-base text-amber-300 font-bold bg-neutral-900/80 px-4 py-2 border-2 border-amber-400/80 rounded w-full break-words">
-        AKHMAD ANGGORO
-      </div>
-
-      <div class="text-[9px] text-emerald-300 leading-relaxed font-sans font-semibold pt-1">
-        Jelajahi peta desa cinta kami, temukan 5 pos rahasia untuk membuka seluruh detail acara lamaran!
-      </div>
-    </div>
-
-    <!-- Footer: Tombol START & Hint -->
-    <div class="w-full max-w-xs mb-6 flex flex-col items-center space-y-3">
-      <button id="startGameBtn" onclick="startGameWorld()" class="btn-pixel-green w-full py-4 text-xs md:text-sm text-white font-bold tracking-widest uppercase">
-        ▶ TEKAN START ◀
-      </button>
-      <div class="text-[8px] text-gray-400 font-sans tracking-wide">
-        Gunakan tombol arah / Sentuh layar untuk berjalan
-      </div>
-    </div>
-
-    <!-- Scanline Vintage Overlay -->
-    <div class="scanlines absolute inset-0"></div>
-  </div>
-
-
-  <!-- ============================================================== -->
-  <!-- 2. SCREEN: PLAYABLE GAME WORLD (OVERWORLD MAP) -->
-  <!-- ============================================================== -->
-  <div id="gameScreen" class="relative w-full h-full flex flex-col items-center justify-between overflow-hidden hidden bg-black">
-
-    <!-- Top HUD Bar: Status & Quest Checkpoints -->
-    <div class="w-full z-20 px-3 py-2 bg-neutral-900/90 border-b-2 border-neutral-700 flex items-center justify-between text-[9px] md:text-xs">
-      <div class="flex items-center space-x-2">
-        <span class="text-red-400">♥</span>
-        <span class="text-amber-300">Zulfan & Nindy</span>
-      </div>
+    <!-- ============================================================== -->
+    <!-- SCREEN 1: TITLE SCREEN / START (AYO MAINKAN) -->
+    <!-- ============================================================== -->
+    <div id="startScreen" class="absolute inset-0 z-50 flex flex-col items-center justify-between p-5 bg-gradient-to-b from-[#13222e] via-[#1a2f3e] to-[#0c141c] text-center">
       
-      <!-- Quest Progress -->
-      <div class="flex items-center space-x-2">
-        <span class="text-gray-400">Pos Ditemukan:</span>
-        <span id="posCounterHud" class="text-emerald-400 font-bold bg-neutral-800 px-2 py-0.5 border border-emerald-500 rounded">
-          0 / 5
-        </span>
-      </div>
-
-      <!-- Music Mute/Unmute Button -->
-      <button id="audioMuteBtn" onclick="toggleBGM()" class="bg-neutral-800 border border-neutral-600 px-2 py-1 rounded text-[10px] text-amber-300 active:scale-95">
-        🔊 MUSIK
-      </button>
-    </div>
-
-    <!-- Canvas Game Map Container -->
-    <div id="canvasViewport" class="relative flex-1 w-full flex items-center justify-center overflow-hidden">
-      <canvas id="gameCanvas" class="bg-[#5c946e] shadow-2xl block"></canvas>
-
-      <!-- Popup Floating Text "Tekan [A] / PERIKSA" ketika di samping pos -->
-      <div id="interactPrompt" class="absolute z-20 pointer-events-none transform -translate-x-1/2 -translate-y-12 bg-amber-300 text-neutral-950 font-bold text-[9px] px-2.5 py-1 rounded border-2 border-black shadow-lg hidden">
-        ! PERIKSA [A]
-      </div>
-    </div>
-
-    <!-- Virtual Retro Controller (D-PAD & A/B Buttons) Khusus HP & Layar Sentuh -->
-    <div id="mobileController" class="w-full z-20 bg-neutral-900/95 border-t-2 border-neutral-800 px-4 py-2 flex items-center justify-between max-w-lg select-none pb-4">
-      
-      <!-- Virtual D-PAD (Arah Panah) -->
-      <div class="relative w-28 h-28 grid grid-cols-3 grid-rows-3 gap-1 p-1">
-        <div></div>
-        <button id="btnUp" class="d-btn rounded-t-lg" data-key="ArrowUp">▲</button>
-        <div></div>
-        <button id="btnLeft" class="d-btn rounded-l-lg" data-key="ArrowLeft">◀</button>
-        <div class="bg-[#1e232a] border border-[#3b424d] flex items-center justify-center">
-          <div class="w-2.5 h-2.5 bg-neutral-600 rounded-full"></div>
+      <!-- Top Title -->
+      <div class="mt-4 flex flex-col items-center w-full">
+        <div class="inline-block px-3 py-1 bg-amber-400 text-neutral-900 text-[9px] font-bold border-2 border-white rounded shadow-sm mb-3 tracking-widest">
+          ★ SPECIAL INVITATION ★
         </div>
-        <button id="btnRight" class="d-btn rounded-r-lg" data-key="ArrowRight">▶</button>
-        <div></div>
-        <button id="btnDown" class="d-btn rounded-b-lg" data-key="ArrowDown">▼</button>
-        <div></div>
+        <h1 class="text-base sm:text-xl text-amber-300 font-extrabold tracking-wider leading-relaxed drop-shadow-[0_3px_0_#92400e]">
+          ENGAGEMENT QUEST
+        </h1>
+        <p class="text-[9px] text-cyan-200 mt-1 font-mono tracking-widest">
+          THE JOURNEY OF TWO HEARTS
+        </p>
       </div>
 
-      <!-- Panduan Tombol Keyboard di Desktop / Text Guide -->
-      <div class="hidden sm:flex flex-col text-[8px] text-neutral-400 font-mono text-center space-y-1">
-        <span>Kontrol Keyboard:</span>
-        <span class="text-amber-200">Tombol Panah / WASD = Jalan</span>
-        <span class="text-emerald-300">Spasi / [A] / [Z] = Periksa</span>
-      </div>
-
-      <!-- Action Buttons A & B (Super Mario / Game Boy Style) -->
-      <div class="flex items-center space-x-3 mr-2">
-        <!-- Tombol B (Batal / Kembali) -->
-        <button id="btnActionB" class="w-12 h-12 rounded-full btn-pixel-red text-white text-[11px] font-bold flex items-center justify-center active:scale-95 shadow-lg">
-          B
-        </button>
-        <!-- Tombol A (Interaksi / Buka) -->
-        <button id="btnActionA" class="w-14 h-14 rounded-full btn-pixel-green text-white text-xs font-bold flex items-center justify-center active:scale-95 shadow-lg border-2 border-white">
-          A
-        </button>
-      </div>
-
-    </div>
-
-    <!-- Scanline Effect Game Screen -->
-    <div class="scanlines absolute inset-0"></div>
-  </div>
-
-
-  <!-- ============================================================== -->
-  <!-- 3. RETRO MODAL / POKEMON DIALOG BOX UNTUK POS DETAIL UNDANGAN -->
-  <!-- ============================================================== -->
-  <div id="dialogOverlay" class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/75 hidden backdrop-blur-xs">
-    
-    <div class="retro-dialog-box w-full max-w-md p-4 flex flex-col justify-between max-h-[88vh] overflow-y-auto">
-      
-      <!-- Dialog Header Bar -->
-      <div class="flex items-center justify-between border-b-2 border-neutral-300 pb-2 mb-3">
-        <div class="flex items-center space-x-2">
-          <span id="dialogIcon" class="text-base">📜</span>
-          <span id="dialogCategory" class="text-[10px] font-bold text-neutral-700 tracking-wider">POS ACARA</span>
+      <!-- Center Card: Retro Box -->
+      <div class="w-full max-w-xs bg-[#242c38] border-4 border-slate-300 p-4 rounded-lg shadow-xl flex flex-col items-center space-y-3">
+        <!-- Pixel Heart SVG -->
+        <div class="w-12 h-12 relative flex items-center justify-center animate-bounce">
+          <svg viewBox="0 0 16 16" class="w-full h-full fill-red-500 drop-shadow-[0_2px_0_#7f1d1d]">
+            <path d="M2 5h2v-2h2v-1h4v1h2v2h2v4h-1v2h-2v2h-2v1h-2v1h-2v-1h-2v-1h-2v-2h-1v-4h1v-2z"/>
+          </svg>
         </div>
-        <button onclick="closeDialog()" class="text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-2 py-1 rounded font-bold">
-          ✕ TUTUP [B]
+
+        <div class="text-[9px] text-gray-300 uppercase tracking-widest">
+          KEPADA YTH. TAMU TERHORMAT:
+        </div>
+        
+        <div id="guestTitleName" class="text-xs text-amber-300 font-bold bg-neutral-900 px-3 py-2 border-2 border-amber-400/80 rounded w-full break-words">
+          AKHMAD ANGGORO, M.ENG
+        </div>
+
+        <p class="text-[9px] text-emerald-300 leading-relaxed font-sans font-medium">
+          Ayo mainkan petualangan kami! Jelajahi rute & pos tersembunyi untuk membuka undangan lamaran ini.
+        </p>
+      </div>
+
+      <!-- Bottom Start Button -->
+      <div class="w-full max-w-xs mb-3 flex flex-col items-center space-y-2">
+        <button id="startGameBtn" onclick="startGameWorld()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 border-4 border-white text-white text-xs font-bold tracking-widest uppercase rounded shadow-[0_4px_0_#166534] active:translate-y-1 active:shadow-none transition-all">
+          ▶ TEKAN START ◀
+        </button>
+        <div class="text-[8px] text-gray-400 font-sans tracking-wide">
+          Gunakan D-Pad atau sentuh layar untuk berjalan
+        </div>
+      </div>
+
+      <div class="scanlines absolute inset-0"></div>
+    </div>
+
+
+    <!-- ============================================================== -->
+    <!-- SCREEN 2: ACTIVE GAME INTERFACE (HUD, CANVAS, CONTROLLER) -->
+    <!-- ============================================================== -->
+    <div id="gameScreen" class="flex-1 flex flex-col justify-between w-full h-full relative overflow-hidden hidden">
+      
+      <!-- TOP STATUS BAR / HUD -->
+      <div class="w-full px-3 py-1.5 bg-[#161d27] border-b-2 border-neutral-700 flex items-center justify-between text-[8px] sm:text-[9px] z-10">
+        <div class="flex items-center space-x-1.5">
+          <span class="text-red-400">♥</span>
+          <span id="coupleNameHud" class="text-amber-300 font-bold">Zulfan & Nindy</span>
+        </div>
+        
+        <div class="flex items-center space-x-1">
+          <span class="text-gray-400">Pos:</span>
+          <span id="posCounterHud" class="text-emerald-400 font-bold bg-neutral-900 px-1.5 py-0.5 border border-emerald-500 rounded">
+            0 / 5
+          </span>
+        </div>
+
+        <button id="audioMuteBtn" onclick="toggleBGM()" class="bg-neutral-800 border border-neutral-600 px-2 py-0.5 rounded text-[8px] text-amber-300 active:scale-95">
+          🔊 MUSIK
         </button>
       </div>
 
-      <!-- Dialog Body Content -->
-      <div id="dialogBody" class="font-sans text-xs text-neutral-800 leading-relaxed space-y-3">
-        <!-- Konten dinamis diinjeksi oleh JavaScript -->
+      <!-- MIDDLE: VIEWPORT & SCREEN FRAME -->
+      <div class="flex-1 w-full px-2 py-1 flex items-center justify-center overflow-hidden min-h-0">
+        <div id="canvasViewport" class="screen-bezel relative w-full h-full flex items-center justify-center overflow-hidden bg-[#497c59]">
+          <canvas id="gameCanvas" class="block"></canvas>
+
+          <!-- Floating Inspection Indicator -->
+          <div id="interactPrompt" class="action-indicator absolute z-20 pointer-events-none bg-amber-300 text-neutral-950 font-bold text-[8px] px-2 py-0.5 rounded border-2 border-black shadow hidden">
+            ! BUKA [A]
+          </div>
+
+          <div class="scanlines absolute inset-0 pointer-events-none"></div>
+        </div>
       </div>
 
-      <!-- Dialog Footer -->
-      <div class="mt-4 pt-2 border-t-2 border-neutral-300 flex items-center justify-between text-[8px] text-neutral-500 font-mono">
-        <span>Tekan [B] atau TUTUP</span>
-        <button onclick="closeDialog()" class="px-3 py-1.5 bg-neutral-800 text-white font-bold rounded hover:bg-black text-[9px]">
-          LANJUT EKSPLORASI ▶
-        </button>
+      <!-- BOTTOM: VIRTUAL GAMEPAD / CONTROLLER (D-PAD & A/B) -->
+      <div class="w-full bg-[#161c24] border-t-2 border-[#2b3545] px-4 py-2 flex items-center justify-between select-none shrink-0">
+        
+        <!-- Virtual D-PAD -->
+        <div class="relative w-28 h-28 grid grid-cols-3 grid-rows-3 gap-0.5 p-0.5">
+          <div></div>
+          <button id="btnUp" class="dpad-btn rounded-t-md" data-dir="up">▲</button>
+          <div></div>
+          <button id="btnLeft" class="dpad-btn rounded-l-md" data-dir="left">◀</button>
+          <div class="bg-[#1f2530] border border-[#374151] flex items-center justify-center">
+            <div class="w-2 h-2 bg-neutral-600 rounded-full"></div>
+          </div>
+          <button id="btnRight" class="dpad-btn rounded-r-md" data-dir="right">▶</button>
+          <div></div>
+          <button id="btnDown" class="dpad-btn rounded-b-md" data-dir="down">▼</button>
+          <div></div>
+        </div>
+
+        <!-- Center Retro Brand / Hint -->
+        <div class="flex flex-col items-center justify-center text-center opacity-70 px-1">
+          <div class="text-[8px] font-bold tracking-widest text-slate-300 font-sans">GAME INVITATION</div>
+          <div class="text-[7px] text-slate-400 font-sans mt-0.5">TAP POS / D-PAD</div>
+          <div class="flex space-x-2 mt-2">
+            <div class="w-8 h-1.5 bg-neutral-700 rounded-full transform -rotate-12"></div>
+            <div class="w-8 h-1.5 bg-neutral-700 rounded-full transform -rotate-12"></div>
+          </div>
+        </div>
+
+        <!-- Action Buttons A & B -->
+        <div class="flex items-center space-x-2.5">
+          <!-- Tombol B (Tutup / Batal) -->
+          <div class="flex flex-col items-center">
+            <button id="btnActionB" class="round-btn btn-b">
+              B
+            </button>
+            <span class="text-[7px] text-gray-400 mt-1 font-mono">TUTUP</span>
+          </div>
+          <!-- Tombol A (Interaksi / Buka) -->
+          <div class="flex flex-col items-center">
+            <button id="btnActionA" class="round-btn btn-a">
+              A
+            </button>
+            <span class="text-[7px] text-emerald-400 mt-1 font-mono">BUKA</span>
+          </div>
+        </div>
+
       </div>
 
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 3. RETRO MODAL / DIALOG POPUP UNTUK DETAIL POS UNDANGAN -->
+    <!-- ============================================================== -->
+    <div id="dialogOverlay" class="absolute inset-0 z-50 flex items-center justify-center p-3 bg-black/80 hidden">
+      <div class="pokemon-dialog-box w-full max-w-sm p-3.5 flex flex-col justify-between max-h-[85vh] overflow-y-auto">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b-2 border-neutral-300 pb-1.5 mb-2">
+          <div class="flex items-center space-x-1.5">
+            <span id="dialogIcon" class="text-sm">📜</span>
+            <span id="dialogCategory" class="text-[9px] font-bold text-neutral-800 tracking-wider">POS ACARA</span>
+          </div>
+          <button onclick="closeDialog()" class="text-[8px] bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-2 py-0.5 rounded font-bold">
+            ✕ [B]
+          </button>
+        </div>
+
+        <!-- Dynamic Body Content -->
+        <div id="dialogBody" class="font-sans text-xs text-neutral-800 leading-relaxed space-y-2.5"></div>
+
+        <!-- Footer -->
+        <div class="mt-3 pt-2 border-t-2 border-neutral-300 flex items-center justify-between text-[7px] text-neutral-500 font-mono">
+          <span>Tekan [B] untuk kembali</span>
+          <button onclick="closeDialog()" class="px-2.5 py-1 bg-neutral-800 text-white font-bold rounded hover:bg-black text-[8px]">
+            LANJUT JALAN ▶
+          </button>
+        </div>
+      </div>
     </div>
 
   </div>
 
 
   <!-- ============================================================== -->
-  <!-- JAVASCRIPT GAME ENGINE: TILE ENGINE, CONTROLLER, & AUDIO -->
+  <!-- JAVASCRIPT GAME LOGIC, TOUCH ENGINE, CAMERA, & SOUND -->
   <!-- ============================================================== -->
   <script>
-    // ---------------------------------------------------------------
-    // DATA MEMPELAI & DETAIL ACARA (Sangat mudah disesuaikan)
-    // ---------------------------------------------------------------
+    // DATA ACARA POKOK (Dapat disesuaikan kapan saja)
     const EVENT_DATA = {
-      pria: "Muhammad Zulfan Rosyid, S.H.",
-      wanita: "Nindy Clarissa, S.H.",
-      tanggal: "Sabtu, 26 Desember 2026",
-      waktu: "Pukul 10.00 - 12.00 WIB",
-      lokasi: "Gedung Setyo Santoso",
-      alamat: "Jl. Ahmad Yani No.16, Banjaran, Kec. Kota, Kota Kediri, Jawa Timur 64129",
-      mapsUrl: "https://www.google.com/maps?vet=10CAAQoqAOahcKEwiogJmUmd6XAxUAAAAAHQAAAAAQFQ..i&mstk=AUtExfDTL7Pa0b8q5edhvjJX68lWOsN3Smhons7M3h8jgU-P2Qcai8Ji1axcid7erbCzQn5GFJGORvlCkMxG_fIY55E4WPj7frfKJ6vXmeJn2BjVUkWKbFTLJOUU4XBToySMll-2YgQIdOLtutl5lUyPwyBALkAC-aZBbQ7j5ud9ObXYgsU&hl=id&pvq=Cg0vZy8xMWM2ZjlnZHhfgAEBkAEB&fvr=1&cs=1&um=1&ie=UTF-8&fb=1&gl=id&sa=X&geocode=KTtvOnJpV3guMd5Vo_bNi_8U&daddr=Jl.+Ahmad+Yani+No.16,+Banjaran,+Kec.+Kota,+Kota+Kediri,+Jawa+Timur+64129",
-      targetDateIso: "2026-11-15T09:30:00+07:00",
-      rekening: [
-        { bank: "Mandiri", nomor: "1420060120010", atasNama: "Muhammad Zulfan Rosyid" },
-        { bank: "BRI", nomor: "087801005221607", atasNama: "Muhammad Zulfan Rosyid" }
-      ]
+      pria: "Zulfan",
+      wanita: "Nindy",
+      tanggal: "Sabtu, 26 November 2026",
+      waktu: "09.30 - 12.00 WIB",
+      lokasi: "Kediaman Mempelai Wanita",
+      alamat: "Jl. Anggrek Melati Indah No. 24, Kediri",
+      mapsUrl: "https://maps.google.com/?q=Jakarta",
+      targetDateIso: "2026-11-15T09:30:00+07:00"
     };
 
-    // ---------------------------------------------------------------
-    // AUDIO ENGINE CHIPTUNE 8-BIT MENGGUNAKAN WEBAUDIO API
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------
+    // AUDIO ENGINE (CHIPTUNE 8-BIT MENGGUNAKAN WEBAUDIO API)
+    // -------------------------------------------------------------
     let audioCtx = null;
     let isBgmPlaying = false;
     let bgmStep = 0;
@@ -322,65 +352,61 @@
       }
     }
 
-    // Sound Effect: Chime Dialog / Jump / Klik
     function playSfx(type) {
       if (!audioCtx) return;
       initAudio();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
       const now = audioCtx.currentTime;
 
       if (type === 'start') {
-        // Melodi jingle pembuka retro
-        const tones = [523.25, 659.25, 783.99, 1046.50];
-        tones.forEach((f, i) => {
-          const o = audioCtx.createOscillator();
-          const g = audioCtx.createGain();
-          o.type = 'square';
-          o.frequency.value = f;
-          g.gain.setValueAtTime(0.06, now + i * 0.09);
-          g.gain.linearRampToValueAtTime(0.001, now + (i + 1) * 0.09);
-          o.connect(g);
-          g.connect(audioCtx.destination);
-          o.start(now + i * 0.09);
-          o.stop(now + (i + 1) * 0.09);
+        [523, 659, 783, 1046].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'square';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.05, now + i * 0.08);
+          gain.gain.linearRampToValueAtTime(0.001, now + (i + 1) * 0.08);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.08);
+          osc.stop(now + (i + 1) * 0.08);
         });
         return;
       }
 
       if (type === 'inspect') {
-        // Nada 'Ting' saat menemukan pos
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(587.33, now); // D5
-        osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+        osc.frequency.setValueAtTime(587, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.14);
         gain.gain.setValueAtTime(0.12, now);
-        gain.gain.linearRampToValueAtTime(0.001, now + 0.18);
+        gain.gain.linearRampToValueAtTime(0.001, now + 0.16);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start(now);
-        osc.stop(now + 0.18);
+        osc.stop(now + 0.16);
         return;
       }
 
       if (type === 'step') {
-        // Nada tap langkah kaki tipis
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(140, now);
         gain.gain.setValueAtTime(0.02, now);
-        gain.gain.linearRampToValueAtTime(0.001, now + 0.04);
+        gain.gain.linearRampToValueAtTime(0.001, now + 0.035);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start(now);
-        osc.stop(now + 0.04);
+        osc.stop(now + 0.035);
       }
     }
 
-    // Melodi 8-bit ceria ala Pallet Town / Overworld RPG
     const BGM_MELODY = [
-      { f: 523.25, d: 0.2 }, { f: 587.33, d: 0.2 }, { f: 659.25, d: 0.2 }, { f: 523.25, d: 0.2 },
-      { f: 659.25, d: 0.2 }, { f: 783.99, d: 0.4 }, { f: 880.00, d: 0.4 }, { f: 783.99, d: 0.4 },
-      { f: 659.25, d: 0.2 }, { f: 587.33, d: 0.2 }, { f: 523.25, d: 0.4 }, { f: 392.00, d: 0.4 },
-      { f: 440.00, d: 0.2 }, { f: 523.25, d: 0.2 }, { f: 587.33, d: 0.4 }, { f: 523.25, d: 0.4 }
+      { f: 523.25, d: 0.22 }, { f: 587.33, d: 0.22 }, { f: 659.25, d: 0.22 }, { f: 523.25, d: 0.22 },
+      { f: 659.25, d: 0.22 }, { f: 783.99, d: 0.44 }, { f: 880.00, d: 0.44 }, { f: 783.99, d: 0.44 },
+      { f: 659.25, d: 0.22 }, { f: 587.33, d: 0.22 }, { f: 523.25, d: 0.44 }, { f: 392.00, d: 0.44 },
+      { f: 440.00, d: 0.22 }, { f: 523.25, d: 0.22 }, { f: 587.33, d: 0.44 }, { f: 523.25, d: 0.44 }
     ];
 
     function loopBGM() {
@@ -390,11 +416,11 @@
 
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
-      osc.type = 'pulse' in osc ? 'pulse' : 'square';
+      osc.type = 'square';
       osc.frequency.setValueAtTime(note.f, now);
 
-      gain.gain.setValueAtTime(0.03, now);
-      gain.gain.exponentialRampToValueAtTime(0.002, now + note.d);
+      gain.gain.setValueAtTime(0.025, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + note.d);
 
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -410,63 +436,59 @@
       isBgmPlaying = !isBgmPlaying;
       const btn = document.getElementById('audioMuteBtn');
       if (isBgmPlaying) {
-        btn.textContent = "🔊 MUSIK: NYALA";
+        btn.textContent = "🔊 MUSIK: ON";
         btn.classList.add('text-emerald-400');
         loopBGM();
       } else {
-        btn.textContent = "🔈 MUSIK: MATI";
+        btn.textContent = "🔈 MUSIK: OFF";
         btn.classList.remove('text-emerald-400');
         clearTimeout(bgmTimer);
       }
     }
 
 
-    // ---------------------------------------------------------------
-    // 5 POS TERSEMBUNYI (CHECKPOINTS) PADA PETA PETUALANGAN
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------
+    // 5 POS TERSEMBUNYI (CHECKPOINTS)
+    // -------------------------------------------------------------
     const checkpoints = [
       {
         id: "pos1",
         tileX: 7,
-        tileY: 4,
+        tileY: 5,
         icon: "📜",
         name: "Papan Cerita",
-        title: "Kisah Dua Hati (Our Story)",
-        desc: "Kilas balik pertemuan Zulfan & Nindy",
+        title: "Kisah Kita (Our Story)",
         visited: false,
         renderDialog: () => `
-          <div class="bg-amber-50 p-3 rounded-lg border border-amber-200">
-            <div class="text-[10px] font-bold text-amber-900 mb-1">📜 PAPAN PENGUMUMAN DESA:</div>
-            <p class="text-xs text-neutral-700 leading-relaxed mb-2">
-              "Kisah ini berawal dari pertemuan tidak disengaja dari kantor Kejaksaan Pamekasan. Berawal dari rekan kerja seangkatan CPNS 2025, obrolan kecil itu berlanjut menjadi diskusi impian masa depan."
+          <div class="bg-amber-50 p-2.5 rounded border border-amber-200">
+            <div class="text-[9px] font-bold text-amber-900 mb-1">📜 AWAL MULA PERJALANAN</div>
+            <p class="text-[11px] text-neutral-700 leading-relaxed mb-2">
+              Dimulai dari perkenalan sederhana yang kemudian tumbuh menjadi rasa saling percaya, memahami, dan menguatkan.
             </p>
-            <p class="text-xs text-neutral-700 leading-relaxed">
-              Setelah 5 tahun belajar memahami, saling mendukung mimpi satu sama lain, hari ini kami memutuskan melangkah ke jenjang yang lebih bermakna.
+            <p class="text-[11px] text-neutral-700 leading-relaxed">
+              Hari ini menjadi bukti niat tulus kami untuk menyatukan dua keluarga dalam ikatan pertunangan.
             </p>
           </div>
-          <div class="text-[9px] text-emerald-700 font-bold text-center mt-2">
-            ★ Pos Cerita Berhasil Kamu Buka! ★
-          </div>
+          <div class="text-[8px] text-emerald-700 font-bold text-center mt-1">★ Pos 1 Berhasil Dibuka! ★</div>
         `
       },
       {
         id: "pos2",
         tileX: 16,
-        tileY: 5,
+        tileY: 6,
         icon: "⏳",
-        name: "Jam Menara Waktu",
-        title: "Waktu & Tanggal Acara Lamaran",
-        desc: "Jadwal dan hitung mundur menuju hari bahagia",
+        name: "Jam Acara",
+        title: "Waktu & Tanggal Lamaran",
         visited: false,
         renderDialog: () => `
-          <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
-            <div class="text-[10px] font-bold text-blue-900 uppercase tracking-wider mb-2">WAKTU PERTEMUAN KELUARGA</div>
-            <div class="text-sm font-bold text-neutral-800">${EVENT_DATA.tanggal}</div>
-            <div class="text-xs text-blue-700 font-semibold mb-3">${EVENT_DATA.waktu}</div>
+          <div class="bg-blue-50 p-2.5 rounded border border-blue-200 text-center">
+            <div class="text-[9px] font-bold text-blue-900 uppercase mb-1">JADWAL PERTEMUAN</div>
+            <div class="text-xs font-bold text-neutral-800">${EVENT_DATA.tanggal}</div>
+            <div class="text-[11px] text-blue-700 font-semibold mb-2">${EVENT_DATA.waktu}</div>
             
             <div class="p-2 bg-white rounded border border-blue-100">
-              <span class="text-[9px] font-bold text-neutral-500 uppercase block mb-1">Hitung Mundur Waktu:</span>
-              <div id="modalCountdown" class="text-xs font-bold text-red-500 font-mono tracking-widest">
+              <span class="text-[8px] font-bold text-neutral-500 block mb-0.5">HITUNG MUNDUR:</span>
+              <div id="modalCountdown" class="text-[10px] font-bold text-rose-600 font-mono">
                 Memuat hitung mundur...
               </div>
             </div>
@@ -478,19 +500,18 @@
         tileX: 18,
         tileY: 13,
         icon: "🏰",
-        name: "Rumah Pertemuan",
-        title: "Lokasi & Tempat Acara",
-        desc: "Alamat kediaman dan petunjuk navigasi",
+        name: "Lokasi",
+        title: "Tempat Pertemuan",
         visited: false,
         renderDialog: () => `
-          <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-200">
-            <div class="text-[10px] font-bold text-emerald-900 mb-1">🏰 LOKASI RESMI PERTEMUAN:</div>
-            <div class="text-sm font-bold text-neutral-800">${EVENT_DATA.lokasi}</div>
-            <p class="text-xs text-neutral-600 mt-1 mb-3">${EVENT_DATA.alamat}</p>
+          <div class="bg-emerald-50 p-2.5 rounded border border-emerald-200">
+            <div class="text-[9px] font-bold text-emerald-900 mb-1">🏰 LOKASI ACARA:</div>
+            <div class="text-xs font-bold text-neutral-800">${EVENT_DATA.lokasi}</div>
+            <p class="text-[11px] text-neutral-600 mt-1 mb-2.5">${EVENT_DATA.alamat}</p>
             
             <a href="${EVENT_DATA.mapsUrl}" target="_blank" rel="noopener noreferrer" 
-               class="block w-full py-2.5 bg-emerald-600 text-white font-bold text-xs text-center rounded shadow hover:bg-emerald-700 transition">
-              📍 Buka di Google Maps
+               class="block w-full py-2 bg-emerald-600 text-white font-bold text-[10px] text-center rounded shadow hover:bg-emerald-700">
+              📍 Buka Petunjuk Google Maps
             </a>
           </div>
         `
@@ -498,26 +519,25 @@
       {
         id: "pos4",
         tileX: 4,
-        tileY: 14,
+        tileY: 13,
         icon: "📦",
-        name: "Peti Harta Karun",
-        title: "Memori Cinta & Galeri",
-        desc: "Kumpulan kenangan indah berdua",
+        name: "Memori",
+        title: "Peti Kenangan",
         visited: false,
         renderDialog: () => `
-          <div class="bg-rose-50 p-3 rounded-lg border border-rose-200">
-            <div class="text-[10px] font-bold text-rose-900 mb-2">📦 KAMU MEMBUKA PETI HARTA KARUN!</div>
-            <p class="text-xs text-neutral-700 leading-relaxed mb-3">
-              Di dalam peti ini tersimpan kumpulan memori kecil yang berharga: tiket perjalanan pertama, foto tawa di tepi pantai, dan doa-doa yang kami panjatkan.
+          <div class="bg-rose-50 p-2.5 rounded border border-rose-200">
+            <div class="text-[9px] font-bold text-rose-900 mb-1">📦 PETI KENANGAN DIBUKA!</div>
+            <p class="text-[11px] text-neutral-700 leading-relaxed mb-2">
+              Kumpulan cerita, tawa, dan mimpi masa depan yang senantiasa kami rawat bersama.
             </p>
-            <div class="grid grid-cols-2 gap-2 text-center text-xs">
-              <div class="p-3 bg-white border border-rose-100 rounded shadow-xs">
-                <span class="text-xl block">📷</span>
-                <span class="text-[9px] text-gray-500 font-bold">Momen Perjalanan</span>
+            <div class="grid grid-cols-2 gap-2 text-center">
+              <div class="p-2 bg-white rounded border border-rose-100">
+                <span class="text-base block">💍</span>
+                <span class="text-[8px] text-gray-600 font-bold">Niat Suci</span>
               </div>
-              <div class="p-3 bg-white border border-rose-100 rounded shadow-xs">
-                <span class="text-xl block">☕</span>
-                <span class="text-[9px] text-gray-500 font-bold">Kedai Kopi Favorit</span>
+              <div class="p-2 bg-white rounded border border-rose-100">
+                <span class="text-base block">🕊️</span>
+                <span class="text-[8px] text-gray-600 font-bold">Doa Restu</span>
               </div>
             </div>
           </div>
@@ -526,35 +546,34 @@
       {
         id: "pos5",
         tileX: 11,
-        tileY: 8,
+        tileY: 9,
         icon: "💍",
-        name: "Altar Cincin & Lamaran",
-        title: "Konfirmasi Kehadiran & Doa Restu (RSVP)",
-        desc: "Kirim ucapan dan konfirmasi kehadiran",
+        name: "Altar RSVP",
+        title: "Konfirmasi Kehadiran & Doa",
         visited: false,
         renderDialog: () => `
-          <div class="bg-purple-50 p-3 rounded-lg border border-purple-200">
-            <div class="text-[10px] font-bold text-purple-900 mb-1">💍 ALTAR PERTUNANGAN & BUKU TAMU</div>
-            <p class="text-xs text-neutral-700 mb-3">
-              Merupakan kehormatan bagi kami atas doa restu Bapak/Ibu/Sahabat sekalian:
+          <div class="bg-purple-50 p-2.5 rounded border border-purple-200">
+            <div class="text-[9px] font-bold text-purple-900 mb-1">💍 ALTAR PERTUNANGAN & BUKU TAMU</div>
+            <p class="text-[11px] text-neutral-700 mb-2">
+              Mohon konfirmasi kehadiran serta doa restu Anda:
             </p>
 
-            <form onsubmit="submitRsvp(event)" class="space-y-2">
+            <form onsubmit="submitRsvp(event)" class="space-y-1.5">
               <input type="text" id="guestInputName" placeholder="Nama Anda" required
-                     class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-purple-500">
-              <select id="guestAttendance" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded">
-                <option value="Hadir">🎉 Siap Hadir</option>
-                <option value="Ragu-ragu">🤔 Masih Diusahakan</option>
-                <option value="Berhalangan">🙏 Mohon Maaf Belum Bisa Hadir</option>
+                     class="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:border-purple-500">
+              <select id="guestAttendance" class="w-full px-2 py-1 text-xs border border-gray-300 rounded">
+                <option value="Hadir">🎉 Hadir</option>
+                <option value="Ragu">🤔 Masih Diusahakan</option>
+                <option value="Berhalangan">🙏 Berhalangan Hadir</option>
               </select>
-              <textarea id="guestWishText" placeholder="Tulis doa restu untuk Rama & Shinta..." rows="2" required
-                        class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded resize-none"></textarea>
-              <button type="submit" class="w-full py-2 bg-purple-600 text-white font-bold text-xs rounded shadow hover:bg-purple-700">
-                Kirim Konfirmasi & Doa Restu 💌
+              <textarea id="guestWishText" placeholder="Tulis doa restu..." rows="2" required
+                        class="w-full px-2 py-1 text-xs border border-gray-300 rounded resize-none"></textarea>
+              <button type="submit" class="w-full py-1.5 bg-purple-600 text-white font-bold text-xs rounded shadow hover:bg-purple-700">
+                Kirim Konfirmasi 💌
               </button>
             </form>
 
-            <div id="rsvpDoneMsg" class="hidden text-center text-xs font-bold text-purple-700 mt-2">
+            <div id="rsvpDoneMsg" class="hidden text-center text-xs font-bold text-purple-700 mt-1.5">
               Terima kasih banyak atas doanya! ✨
             </div>
           </div>
@@ -563,17 +582,17 @@
     ];
 
 
-    // ---------------------------------------------------------------
-    // ENGINE GAME OVERWORLD & TILE RENDERING (CANVAS)
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------
+    // GAME CANVAS & RETRO MAP ENGINE
+    // -------------------------------------------------------------
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
     const MAP_COLS = 22;
     const MAP_ROWS = 18;
-    const TILE_SIZE = 32; // 32x32 pixel per tile
+    const TILE_SIZE = 32;
 
-    // Definisi Grid Peta (0: Rumput, 1: Jalan Setapak Tanah, 2: Air/Kolam, 3: Pohon/Rintangan)
+    // Grid Peta (0: Rumput, 1: Jalan Setapak, 2: Kolam, 3: Pohon)
     const mapGrid = [
       [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
       [3,0,0,0,0,0,3,3,0,0,0,0,0,0,3,3,0,0,0,0,0,3],
@@ -595,75 +614,65 @@
       [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
     ];
 
-    // Status Karakter Pemain (Hero)
     const player = {
       x: 3 * TILE_SIZE,
       y: 3 * TILE_SIZE,
-      speed: 2.8,
-      facing: 'down', // 'down', 'up', 'left', 'right'
+      speed: 2.6,
+      facing: 'down',
       isMoving: false,
       stepAnimTimer: 0
     };
 
-    // Tombol aktif input
-    const keysPressed = {
-      ArrowUp: false,
-      ArrowDown: false,
-      ArrowLeft: false,
-      ArrowRight: false,
-      KeyW: false,
-      KeyS: false,
-      KeyA: false,
-      KeyD: false
+    const keys = {
+      up: false,
+      down: false,
+      left: false,
+      right: false
     };
 
     let nearbyCheckpoint = null;
     let isDialogOpen = false;
 
-    // Resizing Canvas agar fit sempurna
+    // Resizing responsif agar frame peta mengisi container tanpa overflow
     function resizeCanvas() {
       const container = document.getElementById('canvasViewport');
-      const maxW = container.clientWidth;
-      const maxH = container.clientHeight;
+      if (!container) return;
 
-      // Peta asli ukuran 22x18 tiles (704 x 576)
-      canvas.width = MAP_COLS * TILE_SIZE;
-      canvas.height = MAP_ROWS * TILE_SIZE;
+      const contW = container.clientWidth;
+      const contH = container.clientHeight;
 
-      // Sesuaikan skala CSS agar tampilan pixel tetap tajam
-      const scale = Math.min(maxW / canvas.width, maxH / canvas.height);
-      canvas.style.width = `${Math.floor(canvas.width * scale)}px`;
-      canvas.style.height = `${Math.floor(canvas.height * scale)}px`;
+      canvas.width = MAP_COLS * TILE_SIZE; // 704
+      canvas.height = MAP_ROWS * TILE_SIZE; // 576
+
+      const scale = Math.min(contW / canvas.width, contH / canvas.height);
+      const renderW = Math.floor(canvas.width * scale);
+      const renderH = Math.floor(canvas.height * scale);
+
+      canvas.style.width = `${renderW}px`;
+      canvas.style.height = `${renderH}px`;
     }
     window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', () => setTimeout(resizeCanvas, 150));
 
-
-    // ---------------------------------------------------------------
-    // GAMBAR TILESET RETRO PIXEL ART DI CANVAS
-    // ---------------------------------------------------------------
+    // Render Tile Pixel Art
     function drawTile(type, x, y) {
       if (type === 0) {
-        // Rumput
         ctx.fillStyle = '#65a765';
         ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
-        // Detail rumput pixel
         ctx.fillStyle = '#528f52';
         ctx.fillRect(x + 6, y + 8, 3, 3);
         ctx.fillRect(x + 20, y + 22, 3, 3);
       } else if (type === 1) {
-        // Jalan Setapak Pasir / Bata
         ctx.fillStyle = '#e5c185';
         ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
         ctx.fillStyle = '#d4ae6d';
         ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
       } else if (type === 2) {
-        // Kolam Air
         ctx.fillStyle = '#48cae4';
         ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
         ctx.fillStyle = '#90e0ef';
         ctx.fillRect(x + 4, y + 8, 12, 3);
       } else if (type === 3) {
-        // Pohon Rindang Pembatas Peta
         ctx.fillStyle = '#417a41';
         ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
         ctx.fillStyle = '#2d572d';
@@ -673,59 +682,55 @@
       }
     }
 
-    // Menggambar Pos Checkpoint
+    // Render Pos
     function drawCheckpoint(cp) {
       const px = cp.tileX * TILE_SIZE;
       const py = cp.tileY * TILE_SIZE;
 
-      // Alas pos (karpet batu retro)
       ctx.fillStyle = cp.visited ? '#fef08a' : '#fecdd3';
       ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
       ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = 2;
       ctx.strokeRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
 
-      // Icon Pos Emoticon
       ctx.font = '16px sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(cp.icon, px + TILE_SIZE / 2, py + TILE_SIZE / 2 + 1);
 
-      // Bintang kecil jika sudah dikunjungi
       if (cp.visited) {
         ctx.font = '10px sans-serif';
         ctx.fillText('★', px + TILE_SIZE - 6, py + 8);
       }
     }
 
-    // Menggambar Karakter Petualang Retro Chibi
+    // Render Karakter Chibi Petualang
     function drawPlayer() {
       const x = Math.round(player.x);
       const y = Math.round(player.y);
       const bob = (player.isMoving && Math.floor(player.stepAnimTimer / 8) % 2 === 0) ? 2 : 0;
 
-      // Bayangan kaki
+      // Bayangan
       ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
       ctx.beginPath();
-      ctx.ellipse(x + 16, y + 28, 10, 4, 0, 0, Math.PI * 2);
+      ctx.ellipse(x + 16, y + 28, 9, 3.5, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      // Topi Merah Petualang ala Mario/Ash
+      // Topi Merah
       ctx.fillStyle = '#e63946';
       ctx.fillRect(x + 8, y + 4 - bob, 16, 8);
-      ctx.fillRect(x + 6, y + 9 - bob, 20, 3); // pet topi
+      ctx.fillRect(x + 6, y + 9 - bob, 20, 3);
 
-      // Wajah Chibi
+      // Wajah
       ctx.fillStyle = '#ffd1a4';
       ctx.fillRect(x + 8, y + 12 - bob, 16, 9);
 
-      // Mata sesuai arah hadap
+      // Mata
       ctx.fillStyle = '#1e293b';
       if (player.facing === 'down') {
         ctx.fillRect(x + 11, y + 15 - bob, 3, 3);
         ctx.fillRect(x + 18, y + 15 - bob, 3, 3);
       } else if (player.facing === 'up') {
-        // Tampak belakang (rambut cokelat)
         ctx.fillStyle = '#6b4226';
         ctx.fillRect(x + 8, y + 10 - bob, 16, 11);
       } else if (player.facing === 'left') {
@@ -734,17 +739,15 @@
         ctx.fillRect(x + 20, y + 15 - bob, 3, 3);
       }
 
-      // Baju Biru
+      // Baju & Celana
       ctx.fillStyle = '#1d4ed8';
       ctx.fillRect(x + 9, y + 21 - bob, 14, 8);
-
-      // Celana Cokelat
       ctx.fillStyle = '#475569';
       ctx.fillRect(x + 10, y + 28 - bob, 5, 4);
       ctx.fillRect(x + 17, y + 28 - bob, 5, 4);
     }
 
-    // Cek Tabrakan Dinding Peta
+    // Tabrakan Rintangan
     function isWalkable(x, y) {
       const margin = 6;
       const leftTile   = Math.floor((x + margin) / TILE_SIZE);
@@ -752,12 +755,10 @@
       const topTile    = Math.floor((y + margin + 10) / TILE_SIZE);
       const bottomTile = Math.floor((y + TILE_SIZE - 2) / TILE_SIZE);
 
-      // Cek batas luar
       if (leftTile < 0 || rightTile >= MAP_COLS || topTile < 0 || bottomTile >= MAP_ROWS) {
         return false;
       }
 
-      // Cek apakah mengenai pohon (3) atau air (2)
       const corners = [
         mapGrid[topTile][leftTile],
         mapGrid[topTile][rightTile],
@@ -768,21 +769,18 @@
       return !corners.some(tile => tile === 2 || tile === 3);
     }
 
-    // ---------------------------------------------------------------
-    // UPDATE LOGIKA GERAK KARAKTER & INTERAKSI
-    // ---------------------------------------------------------------
+    // Update Gerakan
     function updateGame() {
       if (isDialogOpen) return;
 
       let dx = 0;
       let dy = 0;
 
-      if (keysPressed.ArrowUp || keysPressed.KeyW) { dy -= 1; player.facing = 'up'; }
-      if (keysPressed.ArrowDown || keysPressed.KeyS) { dy += 1; player.facing = 'down'; }
-      if (keysPressed.ArrowLeft || keysPressed.KeyA) { dx -= 1; player.facing = 'left'; }
-      if (keysPressed.ArrowRight || keysPressed.KeyD) { dx += 1; player.facing = 'right'; }
+      if (keys.up)    { dy -= 1; player.facing = 'up'; }
+      if (keys.down)  { dy += 1; player.facing = 'down'; }
+      if (keys.left)  { dx -= 1; player.facing = 'left'; }
+      if (keys.right) { dx += 1; player.facing = 'right'; }
 
-      // Normalisasi arah serong
       if (dx !== 0 && dy !== 0) {
         dx *= 0.7071;
         dy *= 0.7071;
@@ -795,37 +793,30 @@
         const newX = player.x + dx * player.speed;
         const newY = player.y + dy * player.speed;
 
-        if (isWalkable(newX, player.y)) {
-          player.x = newX;
-        }
-        if (isWalkable(player.x, newY)) {
-          player.y = newY;
-        }
+        if (isWalkable(newX, player.y)) player.x = newX;
+        if (isWalkable(player.x, newY)) player.y = newY;
 
-        if (player.stepAnimTimer % 20 === 0) {
-          playSfx('step');
-        }
+        if (player.stepAnimTimer % 22 === 0) playSfx('step');
       } else {
         player.isMoving = false;
         player.stepAnimTimer = 0;
       }
 
-      // Deteksi Kedekatan dengan Pos Checkpoints
-      checkNearbyCheckpoints();
+      checkNearby();
     }
 
-    function checkNearbyCheckpoints() {
+    function checkNearby() {
       const pCenterX = player.x + TILE_SIZE / 2;
       const pCenterY = player.y + TILE_SIZE / 2;
       const promptEl = document.getElementById('interactPrompt');
+      const viewport = document.getElementById('canvasViewport');
 
       let found = null;
       for (const cp of checkpoints) {
         const cpX = cp.tileX * TILE_SIZE + TILE_SIZE / 2;
         const cpY = cp.tileY * TILE_SIZE + TILE_SIZE / 2;
         const dist = Math.hypot(pCenterX - cpX, pCenterY - cpY);
-
-        if (dist < 42) { // Radius deteksi interaksi
+        if (dist < 40) {
           found = cp;
           break;
         }
@@ -834,50 +825,42 @@
       nearbyCheckpoint = found;
 
       if (nearbyCheckpoint && !isDialogOpen) {
-        // Tampilkan indikator melayang di layar canvas
         promptEl.classList.remove('hidden');
-        promptEl.style.left = `${(player.x / (MAP_COLS * TILE_SIZE)) * 100}%`;
-        promptEl.style.top = `${(player.y / (MAP_ROWS * TILE_SIZE)) * 100}%`;
+        // Posisikan melayang tepat di atas karakter mengikuti skala canvas
+        const scaleX = canvas.clientWidth / canvas.width;
+        const scaleY = canvas.clientHeight / canvas.height;
+        const offsetX = (viewport.clientWidth - canvas.clientWidth) / 2;
+        const offsetY = (viewport.clientHeight - canvas.clientHeight) / 2;
+
+        promptEl.style.left = `${offsetX + (player.x + 16) * scaleX}px`;
+        promptEl.style.top = `${offsetY + player.y * scaleY}px`;
       } else {
         promptEl.classList.add('hidden');
       }
     }
 
-    // ---------------------------------------------------------------
-    // BUKA & TUTUP DIALOG RETRO POS UNDANGAN
-    // ---------------------------------------------------------------
     function interactCurrentPos() {
       if (!nearbyCheckpoint) return;
       playSfx('inspect');
 
-      // Tandai pos telah dikunjungi
       if (!nearbyCheckpoint.visited) {
         nearbyCheckpoint.visited = true;
         updateQuestProgress();
       }
 
-      // Render Modal Dialog
       const overlay = document.getElementById('dialogOverlay');
-      const iconEl = document.getElementById('dialogIcon');
-      const catEl = document.getElementById('dialogCategory');
-      const bodyEl = document.getElementById('dialogBody');
-
-      iconEl.textContent = nearbyCheckpoint.icon;
-      catEl.textContent = nearbyCheckpoint.title.toUpperCase();
-      bodyEl.innerHTML = nearbyCheckpoint.renderDialog();
+      document.getElementById('dialogIcon').textContent = nearbyCheckpoint.icon;
+      document.getElementById('dialogCategory').textContent = nearbyCheckpoint.title.toUpperCase();
+      document.getElementById('dialogBody').innerHTML = nearbyCheckpoint.renderDialog();
 
       isDialogOpen = true;
       overlay.classList.remove('hidden');
 
-      // Jika membuka pos waktu, jalankan timer countdown
-      if (nearbyCheckpoint.id === 'pos2') {
-        runModalCountdown();
-      }
+      if (nearbyCheckpoint.id === 'pos2') runModalCountdown();
     }
 
     function closeDialog() {
-      const overlay = document.getElementById('dialogOverlay');
-      overlay.classList.add('hidden');
+      document.getElementById('dialogOverlay').classList.add('hidden');
       isDialogOpen = false;
     }
 
@@ -885,13 +868,8 @@
       const visitedCount = checkpoints.filter(c => c.visited).length;
       document.getElementById('posCounterHud').textContent = `${visitedCount} / ${checkpoints.length}`;
 
-      // Selebrasi konfeti jika kelima pos berhasil dibuka
       if (visitedCount === checkpoints.length && typeof confetti === 'function') {
-        confetti({
-          particleCount: 100,
-          spread: 80,
-          origin: { y: 0.6 }
-        });
+        confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
       }
     }
 
@@ -899,8 +877,7 @@
       const el = document.getElementById('modalCountdown');
       if (!el) return;
       const target = new Date(EVENT_DATA.targetDateIso).getTime();
-      const now = new Date().getTime();
-      const diff = target - now;
+      const diff = target - new Date().getTime();
 
       if (diff > 0) {
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -914,54 +891,39 @@
 
     function submitRsvp(e) {
       e.preventDefault();
-      const name = document.getElementById('guestInputName').value;
-      const wish = document.getElementById('guestWishText').value;
-      if (!name || !wish) return;
-
       document.getElementById('rsvpDoneMsg').classList.remove('hidden');
       playSfx('inspect');
-      if (typeof confetti === 'function') {
-        confetti({ particleCount: 50, spread: 60 });
-      }
+      if (typeof confetti === 'function') confetti({ particleCount: 50, spread: 60 });
     }
 
-    // ---------------------------------------------------------------
-    // LOOP UTAMA ANIMASI GAME
-    // ---------------------------------------------------------------
     function gameLoop() {
       updateGame();
 
-      // Render Peta
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       for (let r = 0; r < MAP_ROWS; r++) {
         for (let c = 0; c < MAP_COLS; c++) {
           drawTile(mapGrid[r][c], c * TILE_SIZE, r * TILE_SIZE);
         }
       }
-
-      // Render Checkpoints Pos
       for (const cp of checkpoints) {
         drawCheckpoint(cp);
       }
-
-      // Render Karakter
       drawPlayer();
 
       requestAnimationFrame(gameLoop);
     }
 
-    // ---------------------------------------------------------------
-    // PENANGANAN INPUT KONTROL (KEYBOARD & VIRTUAL TOUCH PAD)
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------
+    // INPUT CONTROLS: KEYBOARD & MULTI-TOUCH VIRTUAL CONTROLLER
+    // -------------------------------------------------------------
     window.addEventListener('keydown', (e) => {
-      if (e.code in keysPressed) {
-        keysPressed[e.code] = true;
-      }
+      if (e.code === 'ArrowUp' || e.code === 'KeyW') keys.up = true;
+      if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = true;
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = true;
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = true;
+
       if (e.code === 'Space' || e.key === 'a' || e.key === 'A' || e.key === 'z') {
-        if (!isDialogOpen) {
-          interactCurrentPos();
-        }
+        if (!isDialogOpen) interactCurrentPos();
       }
       if (e.key === 'b' || e.key === 'B' || e.key === 'Escape') {
         if (isDialogOpen) closeDialog();
@@ -969,77 +931,99 @@
     });
 
     window.addEventListener('keyup', (e) => {
-      if (e.code in keysPressed) {
-        keysPressed[e.code] = false;
-      }
+      if (e.code === 'ArrowUp' || e.code === 'KeyW') keys.up = false;
+      if (e.code === 'ArrowDown' || e.code === 'KeyS') keys.down = false;
+      if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
+      if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
     });
 
-    // Kontrol Layar Sentuh Virtual (D-PAD & Tombol A/B)
     function setupTouchControls() {
-      const dpadButtons = [
-        { id: 'btnUp', key: 'ArrowUp' },
-        { id: 'btnDown', key: 'ArrowDown' },
-        { id: 'btnLeft', key: 'ArrowLeft' },
-        { id: 'btnRight', key: 'ArrowRight' }
-      ];
+      const dpadMap = {
+        btnUp: 'up',
+        btnDown: 'down',
+        btnLeft: 'left',
+        btnRight: 'right'
+      };
 
-      dpadButtons.forEach(btnInfo => {
-        const el = document.getElementById(btnInfo.id);
-        const handleStart = (e) => {
+      Object.entries(dpadMap).forEach(([btnId, dir]) => {
+        const el = document.getElementById(btnId);
+        const press = (e) => {
           e.preventDefault();
-          keysPressed[btnInfo.key] = true;
+          keys[dir] = true;
+          el.classList.add('pressed');
         };
-        const handleEnd = (e) => {
+        const release = (e) => {
           e.preventDefault();
-          keysPressed[btnInfo.key] = false;
+          keys[dir] = false;
+          el.classList.remove('pressed');
         };
 
-        el.addEventListener('touchstart', handleStart);
-        el.addEventListener('touchend', handleEnd);
-        el.addEventListener('mousedown', handleStart);
-        el.addEventListener('mouseup', handleEnd);
-        el.addEventListener('mouseleave', handleEnd);
+        el.addEventListener('touchstart', press, { passive: false });
+        el.addEventListener('touchend', release, { passive: false });
+        el.addEventListener('touchcancel', release, { passive: false });
+        el.addEventListener('mousedown', press);
+        el.addEventListener('mouseup', release);
+        el.addEventListener('mouseleave', release);
       });
 
-      // Tombol A (Periksa / Dialog)
+      // Tombol A & B
       const btnA = document.getElementById('btnActionA');
+      const btnB = document.getElementById('btnActionB');
+
+      btnA.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        btnA.classList.add('pressed');
+        if (!isDialogOpen) interactCurrentPos();
+      }, { passive: false });
+      btnA.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        btnA.classList.remove('pressed');
+      }, { passive: false });
       btnA.addEventListener('click', () => {
         if (!isDialogOpen) interactCurrentPos();
       });
 
-      // Tombol B (Tutup / Batal)
-      const btnB = document.getElementById('btnActionB');
+      btnB.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        btnB.classList.add('pressed');
+        if (isDialogOpen) closeDialog();
+      }, { passive: false });
+      btnB.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        btnB.classList.remove('pressed');
+      }, { passive: false });
       btnB.addEventListener('click', () => {
         if (isDialogOpen) closeDialog();
       });
+
+      // Tap langsung di canvas untuk bergerak menuju titik sentuhan
+      canvas.parentElement.addEventListener('click', (e) => {
+        if (isDialogOpen) return;
+        const rect = canvas.getBoundingClientRect();
+        const tapX = (e.clientX - rect.left) * (canvas.width / rect.width);
+        const tapY = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+        // Jika tap dekat pos yang sedang aktif, buka langsung
+        if (nearbyCheckpoint) {
+          interactCurrentPos();
+        }
+      });
     }
 
-    // ---------------------------------------------------------------
-    // START TRANSITION (DARI SCREEN START KE GAMEPLAY MAP)
-    // ---------------------------------------------------------------
     function startGameWorld() {
       playSfx('start');
       initAudio();
 
-      const startScreen = document.getElementById('startScreen');
-      const gameScreen = document.getElementById('gameScreen');
-
-      startScreen.classList.add('hidden');
-      gameScreen.classList.remove('hidden');
+      document.getElementById('startScreen').classList.add('hidden');
+      document.getElementById('gameScreen').classList.remove('hidden');
 
       resizeCanvas();
       setupTouchControls();
 
-      // Mulai BGM ceria
-      if (!isBgmPlaying) {
-        toggleBGM();
-      }
-
-      // Mulai game loop
+      if (!isBgmPlaying) toggleBGM();
       requestAnimationFrame(gameLoop);
     }
 
-    // Ambil parameter nama tamu undangan dari URL (?to=Nisa+Farhana)
     function initGuestFromUrl() {
       const params = new URLSearchParams(window.location.search);
       const guest = params.get('to') || params.get('guest') || params.get('nama');
