@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Engagement Quest: The Love Adventure</title>
+  <!-- Google Pixel Font: Press Start 2P & VT323 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti untuk Fanfare Finis -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background-color: #121820;
+      color: #f7fafc;
+      font-family: 'Press Start 2P', monospace;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      image-rendering: pixelated;
+    }
+
+    /* Retro Game Boy Border Box */
+    .retro-box {
+      border: 4px solid #f6f7f8;
+      box-shadow: 
+        inset 4px 4px 0px #ffffff,
+        inset -4px -4px 0px #8a99a8,
+        0 6px 0px rgba(0, 0, 0, 0.45);
+      background-color: #242b35;
+    }
+
+    .retro-dialog-box {
+      border: 4px solid #ffffff;
+      outline: 4px solid #202020;
+      box-shadow: inset 3px 3px 0px #d0d7de, inset -3px -3px 0px #57606a;
+      background: #ffffff;
+      color: #1f2328;
+    }
+
+    /* Retro Pixelated Buttons */
+    .btn-pixel-green {
+      background-color: #2ea44f;
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 0 #1b632f, 0 6px 0 #000;
+      transition: all 0.08s ease;
+    }
+    .btn-pixel-green:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 #1b632f, 0 2px 0 #000;
+    }
+
+    .btn-pixel-red {
+      background-color: #e63946;
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 0 #9d1b24, 0 6px 0 #000;
+    }
+    .btn-pixel-red:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 #9d1b24, 0 2px 0 #000;
+    }
+
+    /* D-PAD Buttons */
+    .d-btn {
+      background: #2b303a;
+      border: 2px solid #57606a;
+      box-shadow: inset 2px 2px 0 #6e7681, inset -2px -2px 0 #161b22;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #c9d1d9;
+    }
+    .d-btn:active {
+      background: #1f242c;
+      transform: scale(0.94);
+    }
+
+    /* Floating retro blinking animation */
+    @keyframes blinkText {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    .retro-blink {
+      animation: blinkText 0.9s infinite;
+    }
+
+    /* Scanlines effect overlay */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.25) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.04),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.04)
+      );
+      background-size: 100% 4px, 6px 100%;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body class="w-screen h-screen flex flex-col items-center justify-center select-none bg-neutral-950">
+
+  <!-- ============================================================== -->
+  <!-- 1. SCREEN: TITLE SCREEN RETRO / INTRO START (AYO MAINKAN) -->
+  <!-- ============================================================== -->
+  <div id="startScreen" class="absolute inset-0 z-50 flex flex-col items-center justify-between p-6 bg-gradient-to-b from-[#1a2f3b] via-[#223a47] to-[#121c24] text-center">
+    
+    <!-- Header Title Pokemon Style -->
+    <div class="mt-4 flex flex-col items-center">
+      <div class="inline-block px-3 py-1 bg-amber-400 text-neutral-900 text-[10px] font-bold border-2 border-white rounded shadow mb-3 tracking-widest">
+        ★ SPECIAL ENGAGEMENT EDITION ★
+      </div>
+      <h1 class="text-xl md:text-3xl text-amber-300 font-extrabold tracking-wider leading-relaxed drop-shadow-[0_4px_0_#92400e]">
+        ENGAGEMENT QUEST
+      </h1>
+      <p class="text-xs md:text-sm text-cyan-200 mt-2 font-mono tracking-widest">
+        JOURNEY OF LOVE & DESTINY
+      </p>
+    </div>
+
+    <!-- Center Card: Retro Tamu & Pixel Heart -->
+    <div class="retro-box w-full max-w-sm p-5 flex flex-col items-center space-y-4">
+      <!-- Pixel Heart Gif/SVG -->
+      <div class="w-16 h-16 relative flex items-center justify-center animate-bounce">
+        <svg viewBox="0 0 16 16" class="w-full h-full fill-red-500 drop-shadow-[0_3px_0_#7f1d1d]">
+          <path d="M2 5h2v-2h2v-1h4v1h2v2h2v4h-1v2h-2v2h-2v1h-2v1h-2v-1h-2v-1h-2v-2h-1v-4h1v-2z"/>
+        </svg>
+      </div>
+
+      <div class="text-[10px] text-gray-300 uppercase tracking-widest leading-loose">
+        KEPADA YTH. TAMU TERHORMAT:
+      </div>
+      <div id="guestTitleName" class="text-sm md:text-base text-amber-300 font-bold bg-neutral-900/80 px-4 py-2 border-2 border-amber-400/80 rounded w-full break-words">
+        Tamu Undangan
+      </div>
+
+      <div class="text-[9px] text-emerald-300 leading-relaxed font-sans font-semibold pt-1">
+        Jelajahi peta desa cinta kami, temukan 5 pos rahasia untuk membuka seluruh detail acara lamaran!
+      </div>
+    </div>
+
+    <!-- Footer: Tombol START & Hint -->
+    <div class="w-full max-w-xs mb-6 flex flex-col items-center space-y-3">
+      <button id="startGameBtn" onclick="startGameWorld()" class="btn-pixel-green w-full py-4 text-xs md:text-sm text-white font-bold tracking-widest uppercase">
+        ▶ TEKAN START ◀
+      </button>
+      <div class="text-[8px] text-gray-400 font-sans tracking-wide">
+        Gunakan tombol arah / Sentuh layar untuk berjalan
+      </div>
+    </div>
+
+    <!-- Scanline Vintage Overlay -->
+    <div class="scanlines absolute inset-0"></div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 2. SCREEN: PLAYABLE GAME WORLD (OVERWORLD MAP) -->
+  <!-- ============================================================== -->
+  <div id="gameScreen" class="relative w-full h-full flex flex-col items-center justify-between overflow-hidden hidden bg-black">
+
+    <!-- Top HUD Bar: Status & Quest Checkpoints -->
+    <div class="w-full z-20 px-3 py-2 bg-neutral-900/90 border-b-2 border-neutral-700 flex items-center justify-between text-[9px] md:text-xs">
+      <div class="flex items-center space-x-2">
+        <span class="text-red-400">♥</span>
+        <span class="text-amber-300">Rama & Shinta</span>
+      </div>
+      
+      <!-- Quest Progress -->
+      <div class="flex items-center space-x-2">
+        <span class="text-gray-400">Pos Ditemukan:</span>
+        <span id="posCounterHud" class="text-emerald-400 font-bold bg-neutral-800 px-2 py-0.5 border border-emerald-500 rounded">
+          0 / 5
+        </span>
+      </div>
+
+      <!-- Music Mute/Unmute Button -->
+      <button id="audioMuteBtn" onclick="toggleBGM()" class="bg-neutral-800 border border-neutral-600 px-2 py-1 rounded text-[10px] text-amber-300 active:scale-95">
+        🔊 MUSIK
+      </button>
+    </div>
+
+    <!-- Canvas Game Map Container -->
+    <div id="canvasViewport" class="relative flex-1 w-full flex items-center justify-center overflow-hidden">
+      <canvas id="gameCanvas" class="bg-[#5c946e] shadow-2xl block"></canvas>
+
+      <!-- Popup Floating Text "Tekan [A] / PERIKSA" ketika di samping pos -->
+      <div id="interactPrompt" class="absolute z-20 pointer-events-none transform -translate-x-1/2 -translate-y-12 bg-amber-300 text-neutral-950 font-bold text-[9px] px-2.5 py-1 rounded border-2 border-black shadow-lg hidden">
+        ! PERIKSA [A]
+      </div>
+    </div>
+
+    <!-- Virtual Retro Controller (D-PAD & A/B Buttons) Khusus HP & Layar Sentuh -->
+    <div id="mobileController" class="w-full z-20 bg-neutral-900/95 border-t-2 border-neutral-800 px-4 py-2 flex items-center justify-between max-w-lg select-none pb-4">
+      
+      <!-- Virtual D-PAD (Arah Panah) -->
+      <div class="relative w-28 h-28 grid grid-cols-3 grid-rows-3 gap-1 p-1">
+        <div></div>
+        <button id="btnUp" class="d-btn rounded-t-lg" data-key="ArrowUp">▲</button>
+        <div></div>
+        <button id="btnLeft" class="d-btn rounded-l-lg" data-key="ArrowLeft">◀</button>
+        <div class="bg-[#1e232a] border border-[#3b424d] flex items-center justify-center">
+          <div class="w-2.5 h-2.5 bg-neutral-600 rounded-full"></div>
+        </div>
+        <button id="btnRight" class="d-btn rounded-r-lg" data-key="ArrowRight">▶</button>
+        <div></div>
+        <button id="btnDown" class="d-btn rounded-b-lg" data-key="ArrowDown">▼</button>
+        <div></div>
+      </div>
+
+      <!-- Panduan Tombol Keyboard di Desktop / Text Guide -->
+      <div class="hidden sm:flex flex-col text-[8px] text-neutral-400 font-mono text-center space-y-1">
+        <span>Kontrol Keyboard:</span>
+        <span class="text-amber-200">Tombol Panah / WASD = Jalan</span>
+        <span class="text-emerald-300">Spasi / [A] / [Z] = Periksa</span>
+      </div>
+
+      <!-- Action Buttons A & B (Super Mario / Game Boy Style) -->
+      <div class="flex items-center space-x-3 mr-2">
+        <!-- Tombol B (Batal / Kembali) -->
+        <button id="btnActionB" class="w-12 h-12 rounded-full btn-pixel-red text-white text-[11px] font-bold flex items-center justify-center active:scale-95 shadow-lg">
+          B
+        </button>
+        <!-- Tombol A (Interaksi / Buka) -->
+        <button id="btnActionA" class="w-14 h-14 rounded-full btn-pixel-green text-white text-xs font-bold flex items-center justify-center active:scale-95 shadow-lg border-2 border-white">
+          A
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Scanline Effect Game Screen -->
+    <div class="scanlines absolute inset-0"></div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 3. RETRO MODAL / POKEMON DIALOG BOX UNTUK POS DETAIL UNDANGAN -->
+  <!-- ============================================================== -->
+  <div id="dialogOverlay" class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/75 hidden backdrop-blur-xs">
+    
+    <div class="retro-dialog-box w-full max-w-md p-4 flex flex-col justify-between max-h-[88vh] overflow-y-auto">
+      
+      <!-- Dialog Header Bar -->
+      <div class="flex items-center justify-between border-b-2 border-neutral-300 pb-2 mb-3">
+        <div class="flex items-center space-x-2">
+          <span id="dialogIcon" class="text-base">📜</span>
+          <span id="dialogCategory" class="text-[10px] font-bold text-neutral-700 tracking-wider">POS ACARA</span>
+        </div>
+        <button onclick="closeDialog()" class="text-xs bg-neutral-200 hover:bg-neutral-300 text-neutral-800 px-2 py-1 rounded font-bold">
+          ✕ TUTUP [B]
+        </button>
+      </div>
+
+      <!-- Dialog Body Content -->
+      <div id="dialogBody" class="font-sans text-xs text-neutral-800 leading-relaxed space-y-3">
+        <!-- Konten dinamis diinjeksi oleh JavaScript -->
+      </div>
+
+      <!-- Dialog Footer -->
+      <div class="mt-4 pt-2 border-t-2 border-neutral-300 flex items-center justify-between text-[8px] text-neutral-500 font-mono">
+        <span>Tekan [B] atau TUTUP</span>
+        <button onclick="closeDialog()" class="px-3 py-1.5 bg-neutral-800 text-white font-bold rounded hover:bg-black text-[9px]">
+          LANJUT EKSPLORASI ▶
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT GAME ENGINE: TILE ENGINE, CONTROLLER, & AUDIO -->
+  <!-- ============================================================== -->
+  <script>
+    // ---------------------------------------------------------------
+    // DATA MEMPELAI & DETAIL ACARA (Sangat mudah disesuaikan)
+    // ---------------------------------------------------------------
+    const EVENT_DATA = {
+      pria: "Rama Wijaya, S.T.",
+      wanita: "Shinta Putri, S.Pd.",
+      tanggal: "Ahad, 15 November 2026",
+      waktu: "Pukul 09.30 - 12.00 WIB",
+      lokasi: "Gedung Puri Kencana Asri",
+      alamat: "Jl. Taman Melati Raya No. 18, Jakarta Selatan",
+      mapsUrl: "https://maps.google.com/?q=Jakarta",
+      targetDateIso: "2026-11-15T09:30:00+07:00",
+      rekening: [
+        { bank: "BCA", nomor: "1234-5678-90", atasNama: "Rama Wijaya" },
+        { bank: "Mandiri", nomor: "987-65-43210", atasNama: "Shinta Putri" }
+      ]
+    };
+
+    // ---------------------------------------------------------------
+    // AUDIO ENGINE CHIPTUNE 8-BIT MENGGUNAKAN WEBAUDIO API
+    // ---------------------------------------------------------------
+    let audioCtx = null;
+    let isBgmPlaying = false;
+    let bgmStep = 0;
+    let bgmTimer = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Sound Effect: Chime Dialog / Jump / Klik
+    function playSfx(type) {
+      if (!audioCtx) return;
+      initAudio();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      const now = audioCtx.currentTime;
+
+      if (type === 'start') {
+        // Melodi jingle pembuka retro
+        const tones = [523.25, 659.25, 783.99, 1046.50];
+        tones.forEach((f, i) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = 'square';
+          o.frequency.value = f;
+          g.gain.setValueAtTime(0.06, now + i * 0.09);
+          g.gain.linearRampToValueAtTime(0.001, now + (i + 1) * 0.09);
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.start(now + i * 0.09);
+          o.stop(now + (i + 1) * 0.09);
+        });
+        return;
+      }
+
+      if (type === 'inspect') {
+        // Nada 'Ting' saat menemukan pos
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(587.33, now); // D5
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.15); // A5
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.linearRampToValueAtTime(0.001, now + 0.18);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.18);
+        return;
+      }
+
+      if (type === 'step') {
+        // Nada tap langkah kaki tipis
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, now);
+        gain.gain.setValueAtTime(0.02, now);
+        gain.gain.linearRampToValueAtTime(0.001, now + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      }
+    }
+
+    // Melodi 8-bit ceria ala Pallet Town / Overworld RPG
+    const BGM_MELODY = [
+      { f: 523.25, d: 0.2 }, { f: 587.33, d: 0.2 }, { f: 659.25, d: 0.2 }, { f: 523.25, d: 0.2 },
+      { f: 659.25, d: 0.2 }, { f: 783.99, d: 0.4 }, { f: 880.00, d: 0.4 }, { f: 783.99, d: 0.4 },
+      { f: 659.25, d: 0.2 }, { f: 587.33, d: 0.2 }, { f: 523.25, d: 0.4 }, { f: 392.00, d: 0.4 },
+      { f: 440.00, d: 0.2 }, { f: 523.25, d: 0.2 }, { f: 587.33, d: 0.4 }, { f: 523.25, d: 0.4 }
+    ];
+
+    function loopBGM() {
+      if (!isBgmPlaying || !audioCtx) return;
+      const note = BGM_MELODY[bgmStep];
+      const now = audioCtx.currentTime;
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'pulse' in osc ? 'pulse' : 'square';
+      osc.frequency.setValueAtTime(note.f, now);
+
+      gain.gain.setValueAtTime(0.03, now);
+      gain.gain.exponentialRampToValueAtTime(0.002, now + note.d);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + note.d);
+
+      bgmStep = (bgmStep + 1) % BGM_MELODY.length;
+      bgmTimer = setTimeout(loopBGM, note.d * 1000);
+    }
+
+    function toggleBGM() {
+      initAudio();
+      isBgmPlaying = !isBgmPlaying;
+      const btn = document.getElementById('audioMuteBtn');
+      if (isBgmPlaying) {
+        btn.textContent = "🔊 MUSIK: NYALA";
+        btn.classList.add('text-emerald-400');
+        loopBGM();
+      } else {
+        btn.textContent = "🔈 MUSIK: MATI";
+        btn.classList.remove('text-emerald-400');
+        clearTimeout(bgmTimer);
+      }
+    }
+
+
+    // ---------------------------------------------------------------
+    // 5 POS TERSEMBUNYI (CHECKPOINTS) PADA PETA PETUALANGAN
+    // ---------------------------------------------------------------
+    const checkpoints = [
+      {
+        id: "pos1",
+        tileX: 7,
+        tileY: 4,
+        icon: "📜",
+        name: "Papan Cerita",
+        title: "Kisah Dua Hati (Our Story)",
+        desc: "Kilas balik pertemuan Rama & Shinta",
+        visited: false,
+        renderDialog: () => `
+          <div class="bg-amber-50 p-3 rounded-lg border border-amber-200">
+            <div class="text-[10px] font-bold text-amber-900 mb-1">📜 PAPAN PENGUMUMAN DESA:</div>
+            <p class="text-xs text-neutral-700 leading-relaxed mb-2">
+              "Kisah ini berawal dari sebuah perpustakaan kota pada tahun 2021. Berawal dari meminjam buku yang sama, obrolan kecil itu berlanjut menjadi diskusi impian masa depan."
+            </p>
+            <p class="text-xs text-neutral-700 leading-relaxed">
+              Setelah 5 tahun belajar memahami, saling mendukung mimpi satu sama lain, hari ini kami memutuskan melangkah ke jenjang yang lebih bermakna.
+            </p>
+          </div>
+          <div class="text-[9px] text-emerald-700 font-bold text-center mt-2">
+            ★ Pos Cerita Berhasil Kamu Buka! ★
+          </div>
+        `
+      },
+      {
+        id: "pos2",
+        tileX: 16,
+        tileY: 5,
+        icon: "⏳",
+        name: "Jam Menara Waktu",
+        title: "Waktu & Tanggal Acara Lamaran",
+        desc: "Jadwal dan hitung mundur menuju hari bahagia",
+        visited: false,
+        renderDialog: () => `
+          <div class="bg-blue-50 p-3 rounded-lg border border-blue-200 text-center">
+            <div class="text-[10px] font-bold text-blue-900 uppercase tracking-wider mb-2">WAKTU PERTEMUAN KELUARGA</div>
+            <div class="text-sm font-bold text-neutral-800">${EVENT_DATA.tanggal}</div>
+            <div class="text-xs text-blue-700 font-semibold mb-3">${EVENT_DATA.waktu}</div>
+            
+            <div class="p-2 bg-white rounded border border-blue-100">
+              <span class="text-[9px] font-bold text-neutral-500 uppercase block mb-1">Hitung Mundur Waktu:</span>
+              <div id="modalCountdown" class="text-xs font-bold text-red-500 font-mono tracking-widest">
+                Memuat hitung mundur...
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: "pos3",
+        tileX: 18,
+        tileY: 13,
+        icon: "🏰",
+        name: "Rumah Pertemuan",
+        title: "Lokasi & Tempat Acara",
+        desc: "Alamat kediaman dan petunjuk navigasi",
+        visited: false,
+        renderDialog: () => `
+          <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-200">
+            <div class="text-[10px] font-bold text-emerald-900 mb-1">🏰 LOKASI RESMI PERTEMUAN:</div>
+            <div class="text-sm font-bold text-neutral-800">${EVENT_DATA.lokasi}</div>
+            <p class="text-xs text-neutral-600 mt-1 mb-3">${EVENT_DATA.alamat}</p>
+            
+            <a href="${EVENT_DATA.mapsUrl}" target="_blank" rel="noopener noreferrer" 
+               class="block w-full py-2.5 bg-emerald-600 text-white font-bold text-xs text-center rounded shadow hover:bg-emerald-700 transition">
+              📍 Buka di Google Maps
+            </a>
+          </div>
+        `
+      },
+      {
+        id: "pos4",
+        tileX: 4,
+        tileY: 14,
+        icon: "📦",
+        name: "Peti Harta Karun",
+        title: "Memori Cinta & Galeri",
+        desc: "Kumpulan kenangan indah berdua",
+        visited: false,
+        renderDialog: () => `
+          <div class="bg-rose-50 p-3 rounded-lg border border-rose-200">
+            <div class="text-[10px] font-bold text-rose-900 mb-2">📦 KAMU MEMBUKA PETI HARTA KARUN!</div>
+            <p class="text-xs text-neutral-700 leading-relaxed mb-3">
+              Di dalam peti ini tersimpan kumpulan memori kecil yang berharga: tiket perjalanan pertama, foto tawa di tepi pantai, dan doa-doa yang kami panjatkan.
+            </p>
+            <div class="grid grid-cols-2 gap-2 text-center text-xs">
+              <div class="p-3 bg-white border border-rose-100 rounded shadow-xs">
+                <span class="text-xl block">📷</span>
+                <span class="text-[9px] text-gray-500 font-bold">Momen Perjalanan</span>
+              </div>
+              <div class="p-3 bg-white border border-rose-100 rounded shadow-xs">
+                <span class="text-xl block">☕</span>
+                <span class="text-[9px] text-gray-500 font-bold">Kedai Kopi Favorit</span>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: "pos5",
+        tileX: 11,
+        tileY: 8,
+        icon: "💍",
+        name: "Altar Cincin & Lamaran",
+        title: "Konfirmasi Kehadiran & Doa Restu (RSVP)",
+        desc: "Kirim ucapan dan konfirmasi kehadiran",
+        visited: false,
+        renderDialog: () => `
+          <div class="bg-purple-50 p-3 rounded-lg border border-purple-200">
+            <div class="text-[10px] font-bold text-purple-900 mb-1">💍 ALTAR PERTUNANGAN & BUKU TAMU</div>
+            <p class="text-xs text-neutral-700 mb-3">
+              Merupakan kehormatan bagi kami atas doa restu Bapak/Ibu/Sahabat sekalian:
+            </p>
+
+            <form onsubmit="submitRsvp(event)" class="space-y-2">
+              <input type="text" id="guestInputName" placeholder="Nama Anda" required
+                     class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-purple-500">
+              <select id="guestAttendance" class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded">
+                <option value="Hadir">🎉 Siap Hadir</option>
+                <option value="Ragu-ragu">🤔 Masih Diusahakan</option>
+                <option value="Berhalangan">🙏 Mohon Maaf Belum Bisa Hadir</option>
+              </select>
+              <textarea id="guestWishText" placeholder="Tulis doa restu untuk Rama & Shinta..." rows="2" required
+                        class="w-full px-2.5 py-1.5 text-xs border border-gray-300 rounded resize-none"></textarea>
+              <button type="submit" class="w-full py-2 bg-purple-600 text-white font-bold text-xs rounded shadow hover:bg-purple-700">
+                Kirim Konfirmasi & Doa Restu 💌
+              </button>
+            </form>
+
+            <div id="rsvpDoneMsg" class="hidden text-center text-xs font-bold text-purple-700 mt-2">
+              Terima kasih banyak atas doanya! ✨
+            </div>
+          </div>
+        `
+      }
+    ];
+
+
+    // ---------------------------------------------------------------
+    // ENGINE GAME OVERWORLD & TILE RENDERING (CANVAS)
+    // ---------------------------------------------------------------
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const MAP_COLS = 22;
+    const MAP_ROWS = 18;
+    const TILE_SIZE = 32; // 32x32 pixel per tile
+
+    // Definisi Grid Peta (0: Rumput, 1: Jalan Setapak Tanah, 2: Air/Kolam, 3: Pohon/Rintangan)
+    const mapGrid = [
+      [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
+      [3,0,0,0,0,0,3,3,0,0,0,0,0,0,3,3,0,0,0,0,0,3],
+      [3,0,1,1,1,0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,0,3],
+      [3,0,1,0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0,1,0,3],
+      [3,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,3],
+      [3,0,1,1,1,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,3],
+      [3,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,0,0,1,0,3],
+      [3,3,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,3],
+      [3,2,2,0,0,1,1,1,1,0,0,1,0,0,1,1,1,1,1,1,0,3],
+      [3,2,2,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,3],
+      [3,0,0,0,3,3,0,0,0,0,0,1,0,0,0,0,3,3,0,0,0,3],
+      [3,0,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,0,3],
+      [3,0,1,0,0,0,0,0,0,1,0,1,0,1,0,0,0,0,0,1,0,3],
+      [3,0,1,0,3,3,0,0,0,1,1,1,1,1,0,0,3,3,0,1,0,3],
+      [3,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,3],
+      [3,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,3],
+      [3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3],
+      [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
+    ];
+
+    // Status Karakter Pemain (Hero)
+    const player = {
+      x: 3 * TILE_SIZE,
+      y: 3 * TILE_SIZE,
+      speed: 2.8,
+      facing: 'down', // 'down', 'up', 'left', 'right'
+      isMoving: false,
+      stepAnimTimer: 0
+    };
+
+    // Tombol aktif input
+    const keysPressed = {
+      ArrowUp: false,
+      ArrowDown: false,
+      ArrowLeft: false,
+      ArrowRight: false,
+      KeyW: false,
+      KeyS: false,
+      KeyA: false,
+      KeyD: false
+    };
+
+    let nearbyCheckpoint = null;
+    let isDialogOpen = false;
+
+    // Resizing Canvas agar fit sempurna
+    function resizeCanvas() {
+      const container = document.getElementById('canvasViewport');
+      const maxW = container.clientWidth;
+      const maxH = container.clientHeight;
+
+      // Peta asli ukuran 22x18 tiles (704 x 576)
+      canvas.width = MAP_COLS * TILE_SIZE;
+      canvas.height = MAP_ROWS * TILE_SIZE;
+
+      // Sesuaikan skala CSS agar tampilan pixel tetap tajam
+      const scale = Math.min(maxW / canvas.width, maxH / canvas.height);
+      canvas.style.width = `${Math.floor(canvas.width * scale)}px`;
+      canvas.style.height = `${Math.floor(canvas.height * scale)}px`;
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+
+    // ---------------------------------------------------------------
+    // GAMBAR TILESET RETRO PIXEL ART DI CANVAS
+    // ---------------------------------------------------------------
+    function drawTile(type, x, y) {
+      if (type === 0) {
+        // Rumput
+        ctx.fillStyle = '#65a765';
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        // Detail rumput pixel
+        ctx.fillStyle = '#528f52';
+        ctx.fillRect(x + 6, y + 8, 3, 3);
+        ctx.fillRect(x + 20, y + 22, 3, 3);
+      } else if (type === 1) {
+        // Jalan Setapak Pasir / Bata
+        ctx.fillStyle = '#e5c185';
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = '#d4ae6d';
+        ctx.fillRect(x + 2, y + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+      } else if (type === 2) {
+        // Kolam Air
+        ctx.fillStyle = '#48cae4';
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = '#90e0ef';
+        ctx.fillRect(x + 4, y + 8, 12, 3);
+      } else if (type === 3) {
+        // Pohon Rindang Pembatas Peta
+        ctx.fillStyle = '#417a41';
+        ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        ctx.fillStyle = '#2d572d';
+        ctx.fillRect(x + 4, y + 4, TILE_SIZE - 8, TILE_SIZE - 8);
+        ctx.fillStyle = '#528f52';
+        ctx.fillRect(x + 8, y + 8, 8, 8);
+      }
+    }
+
+    // Menggambar Pos Checkpoint
+    function drawCheckpoint(cp) {
+      const px = cp.tileX * TILE_SIZE;
+      const py = cp.tileY * TILE_SIZE;
+
+      // Alas pos (karpet batu retro)
+      ctx.fillStyle = cp.visited ? '#fef08a' : '#fecdd3';
+      ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+
+      // Icon Pos Emoticon
+      ctx.font = '16px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(cp.icon, px + TILE_SIZE / 2, py + TILE_SIZE / 2 + 1);
+
+      // Bintang kecil jika sudah dikunjungi
+      if (cp.visited) {
+        ctx.font = '10px sans-serif';
+        ctx.fillText('★', px + TILE_SIZE - 6, py + 8);
+      }
+    }
+
+    // Menggambar Karakter Petualang Retro Chibi
+    function drawPlayer() {
+      const x = Math.round(player.x);
+      const y = Math.round(player.y);
+      const bob = (player.isMoving && Math.floor(player.stepAnimTimer / 8) % 2 === 0) ? 2 : 0;
+
+      // Bayangan kaki
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+      ctx.beginPath();
+      ctx.ellipse(x + 16, y + 28, 10, 4, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Topi Merah Petualang ala Mario/Ash
+      ctx.fillStyle = '#e63946';
+      ctx.fillRect(x + 8, y + 4 - bob, 16, 8);
+      ctx.fillRect(x + 6, y + 9 - bob, 20, 3); // pet topi
+
+      // Wajah Chibi
+      ctx.fillStyle = '#ffd1a4';
+      ctx.fillRect(x + 8, y + 12 - bob, 16, 9);
+
+      // Mata sesuai arah hadap
+      ctx.fillStyle = '#1e293b';
+      if (player.facing === 'down') {
+        ctx.fillRect(x + 11, y + 15 - bob, 3, 3);
+        ctx.fillRect(x + 18, y + 15 - bob, 3, 3);
+      } else if (player.facing === 'up') {
+        // Tampak belakang (rambut cokelat)
+        ctx.fillStyle = '#6b4226';
+        ctx.fillRect(x + 8, y + 10 - bob, 16, 11);
+      } else if (player.facing === 'left') {
+        ctx.fillRect(x + 9, y + 15 - bob, 3, 3);
+      } else if (player.facing === 'right') {
+        ctx.fillRect(x + 20, y + 15 - bob, 3, 3);
+      }
+
+      // Baju Biru
+      ctx.fillStyle = '#1d4ed8';
+      ctx.fillRect(x + 9, y + 21 - bob, 14, 8);
+
+      // Celana Cokelat
+      ctx.fillStyle = '#475569';
+      ctx.fillRect(x + 10, y + 28 - bob, 5, 4);
+      ctx.fillRect(x + 17, y + 28 - bob, 5, 4);
+    }
+
+    // Cek Tabrakan Dinding Peta
+    function isWalkable(x, y) {
+      const margin = 6;
+      const leftTile   = Math.floor((x + margin) / TILE_SIZE);
+      const rightTile  = Math.floor((x + TILE_SIZE - margin) / TILE_SIZE);
+      const topTile    = Math.floor((y + margin + 10) / TILE_SIZE);
+      const bottomTile = Math.floor((y + TILE_SIZE - 2) / TILE_SIZE);
+
+      // Cek batas luar
+      if (leftTile < 0 || rightTile >= MAP_COLS || topTile < 0 || bottomTile >= MAP_ROWS) {
+        return false;
+      }
+
+      // Cek apakah mengenai pohon (3) atau air (2)
+      const corners = [
+        mapGrid[topTile][leftTile],
+        mapGrid[topTile][rightTile],
+        mapGrid[bottomTile][leftTile],
+        mapGrid[bottomTile][rightTile]
+      ];
+
+      return !corners.some(tile => tile === 2 || tile === 3);
+    }
+
+    // ---------------------------------------------------------------
+    // UPDATE LOGIKA GERAK KARAKTER & INTERAKSI
+    // ---------------------------------------------------------------
+    function updateGame() {
+      if (isDialogOpen) return;
+
+      let dx = 0;
+      let dy = 0;
+
+      if (keysPressed.ArrowUp || keysPressed.KeyW) { dy -= 1; player.facing = 'up'; }
+      if (keysPressed.ArrowDown || keysPressed.KeyS) { dy += 1; player.facing = 'down'; }
+      if (keysPressed.ArrowLeft || keysPressed.KeyA) { dx -= 1; player.facing = 'left'; }
+      if (keysPressed.ArrowRight || keysPressed.KeyD) { dx += 1; player.facing = 'right'; }
+
+      // Normalisasi arah serong
+      if (dx !== 0 && dy !== 0) {
+        dx *= 0.7071;
+        dy *= 0.7071;
+      }
+
+      if (dx !== 0 || dy !== 0) {
+        player.isMoving = true;
+        player.stepAnimTimer++;
+
+        const newX = player.x + dx * player.speed;
+        const newY = player.y + dy * player.speed;
+
+        if (isWalkable(newX, player.y)) {
+          player.x = newX;
+        }
+        if (isWalkable(player.x, newY)) {
+          player.y = newY;
+        }
+
+        if (player.stepAnimTimer % 20 === 0) {
+          playSfx('step');
+        }
+      } else {
+        player.isMoving = false;
+        player.stepAnimTimer = 0;
+      }
+
+      // Deteksi Kedekatan dengan Pos Checkpoints
+      checkNearbyCheckpoints();
+    }
+
+    function checkNearbyCheckpoints() {
+      const pCenterX = player.x + TILE_SIZE / 2;
+      const pCenterY = player.y + TILE_SIZE / 2;
+      const promptEl = document.getElementById('interactPrompt');
+
+      let found = null;
+      for (const cp of checkpoints) {
+        const cpX = cp.tileX * TILE_SIZE + TILE_SIZE / 2;
+        const cpY = cp.tileY * TILE_SIZE + TILE_SIZE / 2;
+        const dist = Math.hypot(pCenterX - cpX, pCenterY - cpY);
+
+        if (dist < 42) { // Radius deteksi interaksi
+          found = cp;
+          break;
+        }
+      }
+
+      nearbyCheckpoint = found;
+
+      if (nearbyCheckpoint && !isDialogOpen) {
+        // Tampilkan indikator melayang di layar canvas
+        promptEl.classList.remove('hidden');
+        promptEl.style.left = `${(player.x / (MAP_COLS * TILE_SIZE)) * 100}%`;
+        promptEl.style.top = `${(player.y / (MAP_ROWS * TILE_SIZE)) * 100}%`;
+      } else {
+        promptEl.classList.add('hidden');
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // BUKA & TUTUP DIALOG RETRO POS UNDANGAN
+    // ---------------------------------------------------------------
+    function interactCurrentPos() {
+      if (!nearbyCheckpoint) return;
+      playSfx('inspect');
+
+      // Tandai pos telah dikunjungi
+      if (!nearbyCheckpoint.visited) {
+        nearbyCheckpoint.visited = true;
+        updateQuestProgress();
+      }
+
+      // Render Modal Dialog
+      const overlay = document.getElementById('dialogOverlay');
+      const iconEl = document.getElementById('dialogIcon');
+      const catEl = document.getElementById('dialogCategory');
+      const bodyEl = document.getElementById('dialogBody');
+
+      iconEl.textContent = nearbyCheckpoint.icon;
+      catEl.textContent = nearbyCheckpoint.title.toUpperCase();
+      bodyEl.innerHTML = nearbyCheckpoint.renderDialog();
+
+      isDialogOpen = true;
+      overlay.classList.remove('hidden');
+
+      // Jika membuka pos waktu, jalankan timer countdown
+      if (nearbyCheckpoint.id === 'pos2') {
+        runModalCountdown();
+      }
+    }
+
+    function closeDialog() {
+      const overlay = document.getElementById('dialogOverlay');
+      overlay.classList.add('hidden');
+      isDialogOpen = false;
+    }
+
+    function updateQuestProgress() {
+      const visitedCount = checkpoints.filter(c => c.visited).length;
+      document.getElementById('posCounterHud').textContent = `${visitedCount} / ${checkpoints.length}`;
+
+      // Selebrasi konfeti jika kelima pos berhasil dibuka
+      if (visitedCount === checkpoints.length && typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    function runModalCountdown() {
+      const el = document.getElementById('modalCountdown');
+      if (!el) return;
+      const target = new Date(EVENT_DATA.targetDateIso).getTime();
+      const now = new Date().getTime();
+      const diff = target - now;
+
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        el.textContent = `${d} HARI ${h} JAM ${m} MENIT MENUJU ACARA`;
+      } else {
+        el.textContent = "HARI BAHAGIA TELAH TIBA!";
+      }
+    }
+
+    function submitRsvp(e) {
+      e.preventDefault();
+      const name = document.getElementById('guestInputName').value;
+      const wish = document.getElementById('guestWishText').value;
+      if (!name || !wish) return;
+
+      document.getElementById('rsvpDoneMsg').classList.remove('hidden');
+      playSfx('inspect');
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 50, spread: 60 });
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // LOOP UTAMA ANIMASI GAME
+    // ---------------------------------------------------------------
+    function gameLoop() {
+      updateGame();
+
+      // Render Peta
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let r = 0; r < MAP_ROWS; r++) {
+        for (let c = 0; c < MAP_COLS; c++) {
+          drawTile(mapGrid[r][c], c * TILE_SIZE, r * TILE_SIZE);
+        }
+      }
+
+      // Render Checkpoints Pos
+      for (const cp of checkpoints) {
+        drawCheckpoint(cp);
+      }
+
+      // Render Karakter
+      drawPlayer();
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    // ---------------------------------------------------------------
+    // PENANGANAN INPUT KONTROL (KEYBOARD & VIRTUAL TOUCH PAD)
+    // ---------------------------------------------------------------
+    window.addEventListener('keydown', (e) => {
+      if (e.code in keysPressed) {
+        keysPressed[e.code] = true;
+      }
+      if (e.code === 'Space' || e.key === 'a' || e.key === 'A' || e.key === 'z') {
+        if (!isDialogOpen) {
+          interactCurrentPos();
+        }
+      }
+      if (e.key === 'b' || e.key === 'B' || e.key === 'Escape') {
+        if (isDialogOpen) closeDialog();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.code in keysPressed) {
+        keysPressed[e.code] = false;
+      }
+    });
+
+    // Kontrol Layar Sentuh Virtual (D-PAD & Tombol A/B)
+    function setupTouchControls() {
+      const dpadButtons = [
+        { id: 'btnUp', key: 'ArrowUp' },
+        { id: 'btnDown', key: 'ArrowDown' },
+        { id: 'btnLeft', key: 'ArrowLeft' },
+        { id: 'btnRight', key: 'ArrowRight' }
+      ];
+
+      dpadButtons.forEach(btnInfo => {
+        const el = document.getElementById(btnInfo.id);
+        const handleStart = (e) => {
+          e.preventDefault();
+          keysPressed[btnInfo.key] = true;
+        };
+        const handleEnd = (e) => {
+          e.preventDefault();
+          keysPressed[btnInfo.key] = false;
+        };
+
+        el.addEventListener('touchstart', handleStart);
+        el.addEventListener('touchend', handleEnd);
+        el.addEventListener('mousedown', handleStart);
+        el.addEventListener('mouseup', handleEnd);
+        el.addEventListener('mouseleave', handleEnd);
+      });
+
+      // Tombol A (Periksa / Dialog)
+      const btnA = document.getElementById('btnActionA');
+      btnA.addEventListener('click', () => {
+        if (!isDialogOpen) interactCurrentPos();
+      });
+
+      // Tombol B (Tutup / Batal)
+      const btnB = document.getElementById('btnActionB');
+      btnB.addEventListener('click', () => {
+        if (isDialogOpen) closeDialog();
+      });
+    }
+
+    // ---------------------------------------------------------------
+    // START TRANSITION (DARI SCREEN START KE GAMEPLAY MAP)
+    // ---------------------------------------------------------------
+    function startGameWorld() {
+      playSfx('start');
+      initAudio();
+
+      const startScreen = document.getElementById('startScreen');
+      const gameScreen = document.getElementById('gameScreen');
+
+      startScreen.classList.add('hidden');
+      gameScreen.classList.remove('hidden');
+
+      resizeCanvas();
+      setupTouchControls();
+
+      // Mulai BGM ceria
+      if (!isBgmPlaying) {
+        toggleBGM();
+      }
+
+      // Mulai game loop
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Ambil parameter nama tamu undangan dari URL (?to=Budi+Santoso)
+    function initGuestFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const guest = params.get('to') || params.get('guest') || params.get('nama');
+      if (guest) {
+        document.getElementById('guestTitleName').textContent = guest;
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initGuestFromUrl();
+      resizeCanvas();
+    });
+  </script>
+</body>
+</html>
